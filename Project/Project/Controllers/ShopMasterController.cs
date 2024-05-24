@@ -14,43 +14,42 @@ namespace Project.Controllers
     {
 
         #region
-        ShopModel shopModel = new ShopModel();
-        ShopMaster shopMaster = new ShopMaster();
-        DataLaye DataLayeProduct = new DataLaye();
-        DataLayeCategories dataLayeCategories = new DataLayeCategories();
-        CustomerDAL customerDAL = new CustomerDAL();
-        Customer customer = new Customer();
+         
+            ShopModel shopModel = new ShopModel();
+            ShopMaster shopMaster = new ShopMaster();
+            DataLaye DataLayeProduct = new DataLaye();
+            DataLayeCategories dataLayeCategories = new DataLayeCategories();
+            CustomerDAL customerDAL = new CustomerDAL();
+            Customer customer = new Customer();
+        
+       
         #endregion
         // GET: ShopMaster
         public ActionResult Index()
         {
-            ShopModel shopModel = new ShopModel();          
+            if ((ShopModel)Session["shopModelKey"] != null)
+            {
+                shopModel = (ShopModel)Session["shopModelKey"];
+            }
+       
             shopModel.ProductModelList = DataLayeProduct.GetList();
             shopModel.ProductCategoryModel = dataLayeCategories.GetList();
+          //  GetList(shopModel);
             return View(shopModel);
         }
        
         public ActionResult GetList(ShopModel shopModel)
         {
-            //int? pageNumber = Session["PageNumber"] as int?;
+
             shopMaster.CustomerName = shopModel.CustomerName;
-            shopMaster.CustomerId = shopModel.CustomerId;
-            shopMaster.ProductId = shopModel.ProductId;
+            shopMaster.CustomerId = shopModel.CustomerId; 
             shopMaster.ProductName = shopModel.ProductName;
             shopMaster.ProductCategoriesId = shopModel.ProductCategoriesId;
             shopMaster.ProductCategory = shopModel.ProductCategory;
             shopMaster.ProductPrice = shopModel.ProductPrice;
             shopMaster.TotalAmmount = shopModel.TotalAmmount;
             shopMaster.PageNumber = shopModel.PageNumber;
-            
-            //if (pageNumber.HasValue)
-            //{
-            //    shopMaster.PageNumber = pageNumber.Value;
-            //}
-            //else
-            //{
-            //    shopMaster.PageNumber = shopModel.PageNumber;
-            //}
+            shopMaster.ProductIdList = shopModel.ProductIdList  ;
             shopMaster.PageSize = shopModel.PageSize;
             shopMaster.FromDate = shopModel.FromDate;
             shopMaster.ToDate = shopModel.ToDate;
@@ -59,9 +58,10 @@ namespace Project.Controllers
             shopModel.TotalRecord = shopMaster.TotalRecord;
             shopModel.ProductModelList = DataLayeProduct.GetList();
             shopModel.ProductCategoryModel = dataLayeCategories.GetList();
-            //Session["PageNumber"] = null;
+            Session["shopModelKey"] = shopModel;
             return Json(shopModel, JsonRequestBehavior.AllowGet);
         }
+    
         [HttpGet]
         public ActionResult Insert()
         {
@@ -74,15 +74,15 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Insert(ShopModel shopModel)
         {
-            //shopModel.CustomerList = customerDAL.GetList(customer);
-            //shopModel.ProductModelList = DataLayeProduct.GetList();
-            //shopModel.ProductCategoryModel = dataLayeCategories.GetList();         
+                
             shopMaster.CustomerId = shopModel.CustomerId;
             shopMaster.ProductId = shopModel.ProductId;
             shopMaster.Quantity = shopModel.Quantity;
             shopMaster.DateSaleOrders = shopModel.DateSaleOrders;
             shopMaster.Save();
-            return Redirect("Index");
+            return Json(shopModel);
+
+          
         }
         [HttpPost]
         public ActionResult Delete(int id)
@@ -98,44 +98,52 @@ namespace Project.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(ShopModel shopModel)
+        public ActionResult Edit(int SaleOrdersDetailsId)
         {
-            //Session["PageNumber"] = shopModel.PageNumber as int?;
-            shopMaster.SaleOrdersDetailsId = shopModel.SaleOrdersDetailsId;
+          
+            shopMaster.SaleOrdersDetailsId = SaleOrdersDetailsId;           
             shopMaster.Load();
-            shopMaster.PageNumber = shopModel.PageNumber;
-            shopModel.CustomerName = shopMaster.CustomerName;
             shopModel.CustomerId = shopMaster.CustomerId;
             shopModel.DateSaleOrders = shopMaster.DateSaleOrders;
-            shopModel.ProductName = shopMaster.ProductName;
             shopModel.ProductId = shopMaster.ProductId;
             shopModel.Quantity = shopMaster.Quantity;
             shopModel.CustomerList = customerDAL.GetList(customer);
             shopModel.ProductModelList = DataLayeProduct.GetList();
             shopModel.ProductCategoryModel = dataLayeCategories.GetList();
-            //return View(shopModel);
-            return View("_Edit", shopModel);
+            return View("Edit", shopModel);
+         //   return View("_Edit", shopModel);
         }
         [HttpPost]
-        //JsonResult
-        public JsonResult Edit(ShopModel shopModel, ShopMaster shopMaster)
+        public ActionResult Edit(ShopModel shopModel)
         {
+            // ShopMaster shopMaster = new ShopMaster();
             shopMaster.SaleOrdersDetailsId = shopModel.SaleOrdersDetailsId;
             shopMaster.CustomerId = shopModel.CustomerId;
             shopMaster.ProductId = shopModel.ProductId;
             shopMaster.DateSaleOrders = shopModel.DateSaleOrders;
-            shopModel.Quantity = shopMaster.Quantity;
-            shopModel.PageNumber = shopMaster.PageNumber;
-            //if (pageNumber.HasValue)
-            //{
-            //    shopModel.PageNumber = pageNumber.Value;
-            //}
+            shopMaster.Quantity = shopModel.Quantity;
             shopModel.CustomerList = customerDAL.GetList(customer);
             shopModel.ProductModelList = DataLayeProduct.GetList();
             shopModel.ProductCategoryModel = dataLayeCategories.GetList();
             shopMaster.Save();
-            //return Redirect("Index");
-            return Json(new { success = true, message = "edit successfull " });
+
+            return Redirect("Index");
         }
-    }
+        //[HttpPost]
+        //public JsonResult Edit(ShopModel shopModel, ShopMaster shopMaster)
+        //{
+        //    shopMaster.SaleOrdersDetailsId = shopModel.SaleOrdersDetailsId;
+        //    shopMaster.CustomerId = shopModel.CustomerId;
+        //    shopMaster.ProductId = shopModel.ProductId;
+        //    shopMaster.DateSaleOrders = shopModel.DateSaleOrders;
+        //    shopModel.Quantity = shopMaster.Quantity;
+        //    shopMaster.Save();
+        //    return Json(shopModel);
+        //}
+        public bool ResetSession()
+        {
+            Session["shopModelKey"] = null;          
+            return true;
+        }
+    } 
 }

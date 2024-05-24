@@ -17,3 +17,18 @@ C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DAL\bin\Debug\Product
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DAL\obj\Debug\DAL.dll
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DAL\obj\Debug\DAL.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\DAL.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\DAL.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\CustomerModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\DataAccessLayeProduct.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\DataAccessLayeProductCategories.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\ProductCategoriesModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\ProductModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\CustomerModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\DataAccessLayeProductCategories.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\DataAccessLayeProduct.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\ProductCategoriesModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\ProductModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\obj\Debug\DAL.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DAL\obj\Debug\DAL.pdb

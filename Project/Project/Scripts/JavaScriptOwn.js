@@ -1,129 +1,145 @@
-﻿
-$(document).ready(function () {
-
-
-    var PageNumber = 1;
-    var PageSize = 10;
-    var CurrentPage = 0;
-    var TotalRecord = 0;
-    var counter;
-
-    var CustomerName = sessionStorage.getItem("CustomerNamekey");
-    $('#CustomerName').val(CustomerName);
-
-    var ProductId = sessionStorage.getItem("ProductIdkey");
-    $('#ProductId').val(ProductId);
-
-    var ProductCategoriesId = sessionStorage.getItem("ProductCategoriesIdkey");
-    $('#ProductCategoriesId').val(ProductCategoriesId);
-
-   
-      
-
-    function GetList() {
-        var formData = $('#searchForm').serialize();
-        formData += '&PageNumber=' + PageNumber;
-        formData += '&PageSize=' + PageSize;
-        console.log(formData);
-          
-        $.ajax({
-            url: "/ShopMaster/GetList",
-            method: "GET",
-            data: formData,
-            dataType: "json",
-            success: function (data) {
-                RenderList(data.MasterList)
-                renderPagination(data.TotalCount, data.PageNumber);
-                TotalRecord = data.TotalRecord;
-                display();
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
+﻿var expanded = false;
+function showCheckboxes() {
+    var checkboxes = document.getElementById("checkboxes");
+    if (!expanded) {
+        checkboxes.style.display = "block";
+        expanded = true;
+    } else {
+        checkboxes.style.display = "none";
+        expanded = false;
     }
+}
+
+var PageNumber;
+var PageSize ;
+var TotalRecord = 0;
+var counter;
+debugger;
 
 
-
-    function Insert() {
-        $.ajax({
-            url: "/ShopMaster/Insert",
-
-            method: "GET",
-            success: function (response) {
-                $('.modal-body').html(response);
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    }
-
-    function Delete(id, CustomerName) {
-        CustomerName
-
-        Swal.fire({
-            title: "Are you sure?",
-            html: "To Delete <b>" + CustomerName + "</b> record.",
-          //  text: "To Delete " + CustomerName + " record.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-                var obj = { id: id };
-                $.ajax({
-                    url: "/ShopMaster/Delete",
-
-                    type: 'POST',
-                    data: obj,
-                    success: function () {
-                        console.log('Success..')
-                        GetList(null, null, null, null, null, PageNumber, PageSize);
-                    },
-                    error: function () {
-                        console.log(error);
-                    }
-                })
-            }
-        })
-    }
-
-    function Edit(id) {
-          
-        var obj = {
-            SaleOrdersDetailsId: id,
-         // PageNumber: PageNumber
+function GetList() {
+    var formData = $('#searchForm').serialize();
+    formData += '&PageNumber=' + PageNumber ;
+    formData += '&PageSize=' + PageSize;
+    debugger;
+    expanded = false;
+    console.log(formData);
+    $.ajax({
+        url: "/ShopMaster/GetList",
+        method: "GET",
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+            RenderList(data.MasterList)
+            renderPagination(data.TotalCount, data.PageNumber);
+            debugger;
+            TotalRecord = data.TotalRecord;    
+            display();
+        },
+        error: function (err) {
+            console.log(err);
         }
-        $.ajax({
-            url: '/ShopMaster/Edit/ ' + id,
-            method: 'GET',
-            data: obj,
-            success: function (response) {
-                $('.modal').modal();
-                $('.modal-body').html(response);
-                console.log('Edit Working... 2');
-            },
-            eror: function () {
-                console.log(error);
-            }
-        })
+    });
+}
+
+
+function Insert() {
+
+    $.ajax({
+        url: "/ShopMaster/Insert",
+        method: "GET",
+        success: function (response) {
+            $('.modal-body').html(response);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+
+
+function display() {
+   
+    $('#displayPager').empty();
+    var StartRecord = (PageNumber - 1) * PageSize + 1;
+    var EndRecord = (PageNumber * PageSize);
+    debugger;
+    if (EndRecord > TotalRecord) {
+        EndRecord = TotalRecord;
     }
+    $('#displayPager').html('<h5><strong>Showing</strong> ' + StartRecord + ' - ' + EndRecord + ' <strong> of </strong> ' + TotalRecord + '<strong> records </strong> </h5>');
+
+}
 
 
 
-    function RenderList(list) {
-        var tableBody = $('#tblMasterShop tbody');
-        tableBody.empty();
-        if (list.length != 0)
-        {
+function Delete(id, CustomerName) {
+    CustomerName
+
+    Swal.fire({
+        title: "Are you sure?",
+        html: "To Delete <b>" + CustomerName + "</b> record.",
+        //  text: "To Delete " + CustomerName + " record.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+            });
+            var obj = { id: id };
+            $.ajax({
+                url: "/ShopMaster/Delete",
+
+                type: 'POST',
+                data: obj,
+                success: function () {
+                    console.log('Success..')
+                    GetList(null, null, null, null, null, PageNumber, PageSize);
+                },
+                error: function () {
+                    console.log(error);
+                }
+            })
+        }
+    })
+}
+
+
+
+function Edit(id) {
+
+    var obj = {
+        SaleOrdersDetailsId: id,
+        // PageNumber: PageNumber
+    }
+    $.ajax({
+        url: '/ShopMaster/Edit/ ' + id,
+        method: 'GET',
+        data: obj,
+        success: function (response) {
+            $('.modal').modal();
+            $('.modal-body').html(response);
+            console.log('Edit Working... 2');
+        },
+        eror: function () {
+            console.log(error);
+        }
+    })
+}
+
+
+
+function RenderList(list) {
+    var tableBody = $('#tblMasterShop tbody');
+    tableBody.empty();
+    if (list.length != 0) {
 
         $.each(list, function (index, item) {
             var row = '<tr align="center" style="border: 1px solid #807d78;">' +
@@ -134,97 +150,140 @@ $(document).ready(function () {
                 '<td scope="col" style="border: 1px solid #807d78;">' + item.Quantity + '</td>' +
                 '<td scope="col" style="border: 1px solid #807d78;">' + item.ProductPrice + '</td>' +
                 '<td scope="col" style="border: 1px solid #807d78;">' + item.TotalAmmount + '</td>' +
-                '<td scope="col" style="border: 1px solid #807d78;">' + '<button id="EditSaleOrdersDetails" value="' + item.SaleOrdersDetailsId + '" class="btn ">Edit</button>' +
-                '&nbsp;&nbsp;' + '<button id = "deleteSaleOrder" data-name="' + item.CustomerName + '" value="' + item.SaleOrdersDetailsId + '" class="btn" >Delete</button>' + '</td>'
+                '<td scope="col" style="border: 1px solid #807d78;">'
+                + '<a href="/ShopMaster/Edit?SaleOrdersDetailsId=' + item.SaleOrdersDetailsId + '" role="button" class="btn ">Edit</a>' + '&nbsp;&nbsp;' +
+                '<button id="EditSaleOrdersDetails" value="' + item.SaleOrdersDetailsId + '" class="btn ">Edit</button>' +
+                '&nbsp;&nbsp;' + '<button id = "deleteSaleOrder" data-name="' + item.CustomerName + '" value="' + item.SaleOrdersDetailsId + '" class="btn" >Delete</button>' +
+                '</td>'
             tableBody.append(row);
         }
         )
+    }
+    else {
+        row = '<tr><td colspan="8" class="text-center text-danger font-weight-bold h3" style="vertical-align:middle;" scope="row">No Records Found</td></tr>'
+        tableBody.append(row);
+    }
+}
+
+
+function renderPagination(TotalCount, PageNumber) {
+    $(".pagination").empty()
+    if (PageNumber > 1) {
+        $(".pagination").append(`<li class="page-item "  value=${PageNumber - 1} id="pagenumber"><a class="page-link" href="#" tabindex="-1">Previous</a></li>`);
+    }
+    for (var i = 1; i <= TotalCount; i++) {
+        if (PageNumber == i) {
+            $(".pagination").append(` <li class="page-item active" value=${i} id="pagenumber" ><a class="page-link" href="#">${i}</a></li>`)
+        } else {
+            $(".pagination").append(` <li class="page-item "   value=${i} id="pagenumber"><a class="page-link" href="#">${i}</a></li>`)
         }
-        else {
-            row = '<tr><td colspan="8" class="text-center text-danger font-weight-bold h3" style="vertical-align:middle;" scope="row">No Records Found</td></tr>'
-            tableBody.append(row);
+    }
+    if (TotalCount != PageNumber) {
+        $(".pagination").append(`<li class="page-item"   value=${PageNumber + 1} id="pagenumber"><a class="page-link" href="#">Next</a></li>`)
+
+    }
+}
+
+
+function search() {
+    //var CustomerName = $('#CustomerName').val();
+    //sessionStorage.setItem('CustomerNamekey', CustomerName);    
+    PageNumber = 1;
+    GetList();
+}
+
+
+function Pagesize() {
+    PageSize = $('#PageSize').val();
+    PageNumber = 1;
+    GetList();
+}
+
+
+function editSave() {
+    var formData = $('#form').serialize();
+ 
+    debugger;
+    $.ajax({
+        url: "/ShopMaster/Edit",
+        method: "POST",
+        data: formData,
+        dataType: "json",
+        success: function (response) {
+            console.log("hello.....");
+            GetList();
+        },
+        error: function (err) {
+            console.log(err);
         }
+    });
+}
+
+
+
+
+$(document).ready(function () {
+    if (sessionStorage.getItem('boxes')) {
+        let checkBoxArray = JSON.parse(sessionStorage.getItem('boxes'));
+        $("#checkboxes").find('input:checkbox').each(function () {
+            $(this).prop("checked", ($.inArray($(this).val(), checkBoxArray) !== -1));
+        });
     }
 
 
-
-
-
-
-    function renderPagination(TotalCount, PageNumber) {
-        $(".pagination").empty()
+    PageNumber = document.getElementById('xyz').getAttribute('data-page-number');;
+    console.log(PageNumber)
+    PageSize = $('#PageSize').val();
+    debugger;
+    GetList();
+    debugger;
    
-        if (PageNumber > 1) {
-            $(".pagination").append(`<li class="page-item "  value=${PageNumber - 1} id="pagenumber"><a class="page-link" href="#" tabindex="-1">Previous</a></li>`);
-
-        }
-        for (var i = 1; i <= TotalCount; i++) {
-            if (PageNumber == i) {
-                $(".pagination").append(` <li class="page-item active" value=${i} id="pagenumber" ><a class="page-link" href="#">${i}</a></li>`)
-
-            } else {
-                $(".pagination").append(` <li class="page-item "   value=${i} id="pagenumber"><a class="page-link" href="#">${i}</a></li>`)
-
-            }
-        }
-        if (TotalCount != PageNumber) {
-            $(".pagination").append(`<li class="page-item"   value=${PageNumber + 1} id="pagenumber"><a class="page-link" href="#">Next</a></li>`)
-
-        }
-    }
-
-
-    function search() {
-           
-
-        var CustomerName = $('#CustomerName').val();
-        sessionStorage.setItem('CustomerNamekey', CustomerName);
-
-        var ProductId = $('#ProductId').val();
-        sessionStorage.setItem('ProductIdkey', ProductId);
-
-        var ProductCategoriesId = $('#ProductCategoriesId').val();
-        sessionStorage.setItem('ProductCategoriesIdkey', ProductCategoriesId);
-        console.log("ProductCategoriesId" + ProductCategoriesId);
-
-        PageNumber = 1;
-          
-        GetList();
-    }
-
-
-
-    $('#reset').click(function () {
-     
-        sessionStorage.clear();
-        $('#searchForm').find('form')[0].reset();
-                             
-        GetList();
-          
-    })
-
-
-
-    $('#PageSize').change(function () {
-        PageSize = $(this).val();
-        PageNumber = 1;
+    //var CustomerName = sessionStorage.getItem("CustomerNamekey");
+    //$('#CustomerName').val(CustomerName);     
     
-          
-        GetList();
+    $(document).on('click', '#reset', function () {
+        var checkboxes = document.getElementById("checkboxes");
+        checkboxes.style.display = "none";
+        $.ajax({
+            url: '/ShopMaster/ResetSession/ ',            
+            success: function (response) {
+                $('#CustomerName').val(null);
+                $('#ProductCategoriesId').val(null);
+                $('#FromDate').val(null);
+                $('#ToDate').val(null);
+                $('input[name="ProductIdList"]').prop('checked', false);
+                sessionStorage.clear();
+                GetList();
+               debugger;                  
+            },
+            eror: function () {
+                console.log(error);
+            }
+        })
+    })
+  
+    $(document).on('change', '#PageSize', function () {
+        Pagesize()
     })
 
 
     $(document).on('click', '#insert', function () {
-          
-        Insert();  
+                 Insert();  
+
     });
 
 
     $(document).on('click', '#searchbtn', function () {
-          
         event.preventDefault(); // Prevent default form submission
+        var checkboxes = document.getElementById("checkboxes");
+        checkboxes.style.display = "none";
+        expanded = false;
+        let checkboxArray = [];
+        $('input:checkbox:checked').each(function () {
+            checkboxArray.push($(this).val());;
+        });
+        sessionStorage.setItem('boxes', JSON.stringify(checkboxArray));       
         search();
-
     })
     $(document).on('click', '#EditSaleOrdersDetails', function () {
         var id = $(this).val();
@@ -236,13 +295,7 @@ $(document).ready(function () {
         oldEdit(id);
     })
 
-    //function oldEdit(id) {
-    //    console.log("pagenumber=>" + PageNumber);
-    //    window.location.href = '/ShopMaster/Edit?SaleOrdersDetailsId=' + id + '&PageNumber=' + PageNumber;
-    //}
-
-
-
+    
     $(document).on('click', '#deleteSaleOrder', function () {
         debugger
         var id = $(this).val();
@@ -251,63 +304,72 @@ $(document).ready(function () {
         Delete(id, CustomerName);
     })
 
-
-
     $(document).on('click', '#pagenumber', function () {
         console.log("Function get clicked..")
-          
         PageNumber = $(this).val();
+        debugger;
         PageSize = $('#PageSize').val();
-        sessionStorage.setItem('PageNumberkey', PageNumber);
-      
-          
+        //sessionStorage.setItem('PageNumberkey', PageNumber);
         GetList();
 
     })
 
-
-
-
-
-    function editSave() {
-        var formData = $('#form').serialize();
-        PageSize = $('#PageSize').val();
-        $.ajax({
-            url: "/ShopMaster/Edit",
-            method: "POST",
-            data: formData,
-            dataType: "json",
-            success: function (response) {
-                console.log("hello.....");
-                  
-                GetList();
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    }
-
-
-
     $(document).on('click', '#saveBtn', function () {
-        editSave();
-
+ 
+            editSave();
     })
-    function display() {
+
+    $(document).on('click', '#InsertSave', function () {
         debugger;
-        $('#displayPager').empty();
-        var StartRecord = (PageNumber - 1) * PageSize + 1;
-        var EndRecord = (PageNumber * PageSize);
-
-        if (EndRecord > TotalRecord) {
-            EndRecord = TotalRecord;
+        //$(document).off('click', '#InsertSave').on('click', '#InsertSave', function () {
+        event.preventDefault();
+        var formData = $('#formInsert').serialize();
+        var isValid = true;      
+        var CustomerId = $('#CustomerIdInsert').val();
+        var ProductId = $('#productId2').val();
+        var Quantity = $('#QuentityId').val();
+        var Date = $('#dateInsert').val(); 
+        if (CustomerId <= 0) {
+            $('#CustomerIdErrorMassage').html("Please select Customer.");
+            isValid = false;
+        } else {
+            $('#CustomerIdErrorMassage').html("It is valid !");
+        }      
+        if (ProductId <= 0) {
+            $('#ProductIdErrorMassage').html("Please select Product.");
+            isValid = false;
+        } else {
+            $('#ProductIdErrorMassage').html("It is valid !");
+        }   
+        if (Quantity <= 0) {
+            $('#QuantityErrorMassage').html("Quantity should be greater than Zero '0'.");
+            isValid = false;
+        } else {
+            $('#QuantityErrorMassage').html("It is valid !");
+        }    
+        if (Date === "") {
+            $('#DateErrorMassage').html("Please select Date.");
+            isValid = false;
+        } else {
+            $('#DateErrorMassage').html("It is valid !");
+        }   
+        if (isValid) {
+            debugger;
+            $.ajax({
+                url: "/ShopMaster/Insert",
+                method: "POST",
+                data: formData,
+                success: function (response) {
+                    $('.modal').modal().hide();
+                    $('.modal-backdrop').remove();
+                   
+                    GetList();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
         }
-        $('#displayPager').html('<h5><strong>Showing</strong> '+StartRecord+' - '+EndRecord+' <strong> of </strong> '+TotalRecord+'<strong> records </strong> </h5>');
-       
-    }
-
-
-    GetList();
+    });
 
 })

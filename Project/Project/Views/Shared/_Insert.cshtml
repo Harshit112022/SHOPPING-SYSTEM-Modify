@@ -6,6 +6,7 @@
 @{
     ViewBag.Title = "Insert";
 }
+
 <style>
     .btn-default {
         color: #fff;
@@ -13,31 +14,36 @@
         border-color: #ccc;
     }
 </style>
-
-
 <h2>Insert</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formInsert" }))
 {
     <div style="margin-right:10px">
         <label>Select Customer Name</label>
-        @Html.DropDownListFor(m => m.CustomerId, new SelectList(Model.CustomerList, "CustomerId", "Name"), "--Select Customer--", new { @class = "form-control ", @id = "CustomerId" })
+        @Html.DropDownListFor(m => m.CustomerId, new SelectList(Model.CustomerList, "CustomerId", "Name"), "--Select Customer--", new { @class = "form-control",@id="CustomerIdInsert" })
+        <lable id="CustomerIdErrorMassage" style="color: red; font-weight: bold;"></lable>
     </div>
     <div style="margin-right:10px">
-        <label>Select Oder Date</label><br />
-        @Html.TextBoxFor(model => model.DateSaleOrders, new { @class = "form-control", @type = "date", @id = "DateSaleOrders" })
+        <label>Select Order Date</label><br />
+        @Html.TextBoxFor(model => model.DateSaleOrders,new { @class = "form-control", @id = "dateInsert",@type="date" })
+        <lable id="DateErrorMassage" style="color: red; font-weight: bold;"></lable>
+     
     </div>
     <div style="margin-right:10px">
         <label>Select Product</label>
-        @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductModelList, "ProductId", "Name"), "--Select Product--", new { @class = "form-control ", @id = "ProductId" })
+        @Html.DropDownListFor(m => m.ProductId, new SelectList(Model.ProductModelList, "ProductId", "Name"), "--Select Product--", htmlAttributes: new { @class = "form-control",@id="productId2"})
+        <lable id="ProductIdErrorMassage" style="color: red; font-weight: bold;"></lable>
     </div>
     <div style="margin-right:10px">
         <label>Enter Quantity</label>
-        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", type = "number", step = "1" })
+        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control",@id="QuentityId", type = "number", step = 1 })
+        <lable id="QuantityErrorMassage" style="color: red; font-weight: bold;"></lable>
+  
     </div><br />
+    <lable id="DataSave" style="color: green; font-weight: bold;"></lable>
     <div class="form-group">
+       <lable id="ErrorMassage"></lable>
         <div>
-      
-            <input type="submit" value="Save" class="btn btn-primary" />
+            <input type="button" id="InsertSave" value="Save" class="btn btn-primary" />
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
     </div>

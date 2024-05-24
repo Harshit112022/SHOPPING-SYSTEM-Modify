@@ -5,3 +5,10 @@ C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductModel\bin\Debu
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductModel\obj\Debug\ProductModel.csprojResolveAssemblyReference.cache
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductModel\obj\Debug\ProductModel.dll
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductModel\obj\Debug\ProductModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\bin\Debug\ProductModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\bin\Debug\ProductModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\bin\Debug\ProductCategoriesModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\bin\Debug\ProductCategoriesModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\obj\Debug\ProductModel.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\obj\Debug\ProductModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\ProductModel\obj\Debug\ProductModel.pdb

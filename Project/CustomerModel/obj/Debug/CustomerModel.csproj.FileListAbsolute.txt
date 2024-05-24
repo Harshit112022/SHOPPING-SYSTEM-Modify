@@ -15,3 +15,8 @@ C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\CustomerModel\bin\Deb
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\CustomerModel\obj\Debug\CustomerModel.dll
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\CustomerModel\obj\Debug\CustomerModel.pdb
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\CustomerModel\obj\Debug\CustomerModel.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\CustomerModel\bin\Debug\CustomerModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\CustomerModel\bin\Debug\CustomerModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\CustomerModel\obj\Debug\CustomerModel.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\CustomerModel\obj\Debug\CustomerModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\CustomerModel\obj\Debug\CustomerModel.pdb

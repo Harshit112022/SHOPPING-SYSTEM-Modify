@@ -11,3 +11,12 @@ C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProduct
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProduct\obj\Debug\DataAccessLayeProduct.csprojResolveAssemblyReference.cache
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProduct\obj\Debug\DataAccessLayeProduct.dll
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProduct\obj\Debug\DataAccessLayeProduct.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\bin\Debug\DataAccessLayeProduct.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\bin\Debug\DataAccessLayeProduct.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\bin\Debug\ProductCategoriesModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\bin\Debug\ProductModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\bin\Debug\ProductCategoriesModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\bin\Debug\ProductModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\obj\Debug\DataAccessLayeProduct.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\obj\Debug\DataAccessLayeProduct.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProduct\obj\Debug\DataAccessLayeProduct.pdb

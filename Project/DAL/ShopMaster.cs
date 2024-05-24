@@ -35,6 +35,7 @@ namespace DAL
         {
             get; set;
         }
+        public List<int> ProductIdList { get; set; }
         public string ProductCategory
         {
             get; set;
@@ -98,10 +99,23 @@ namespace DAL
                 else
                     db.AddInParameter(com, "@id", DbType.Int32, DBNull.Value);
                 db.AddInParameter(com, "@Varname", DbType.String, this.CustomerName);
-                if (this.ProductId > 0)
-                    db.AddInParameter(com, "@VarProductId", DbType.Int32, this.ProductId);
+
+
+                //if (this.ProductId > 0)
+                //    db.AddInParameter(com, "@VarProductId", DbType.Int32, this.ProductId);
+                //else
+                //    db.AddInParameter(com, "@VarProductId", DbType.Int32, DBNull.Value);
+
+                if (this.ProductIdList != null)
+                {
+                    string ProductIdString = string.Join(",", this.ProductIdList);
+                    db.AddInParameter(com, "@VarProductId", DbType.String, ProductIdString);
+                }
                 else
-                    db.AddInParameter(com, "@VarProductId", DbType.Int32, DBNull.Value);
+                {
+                    db.AddInParameter(com, "@VarProductId", DbType.String, DBNull.Value);
+                }
+
                 if (this.ProductCategoriesId > 0)
                 {
                     db.AddInParameter(com, "@varProductCategory", DbType.Int32, this.ProductCategoriesId);
@@ -201,8 +215,10 @@ namespace DAL
                     else
                         db.AddInParameter(com, "@PageSize", DbType.Int32, DBNull.Value);
                     db.AddOutParameter(com, "@TotalCount", DbType.Int32, 1024);
+                    db.AddOutParameter(com, "@TotalRecord", DbType.Int32, 1024);
                     ds = db.ExecuteDataSet(com);
                     this.TotalCount = (int)db.GetParameterValue(com, "@TotalCount");
+                    this.TotalRecord = (int)db.GetParameterValue(com, "@TotalRecord");
                     //  DataSet ds = this.db.ExecuteDataSet(com);
                     if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {

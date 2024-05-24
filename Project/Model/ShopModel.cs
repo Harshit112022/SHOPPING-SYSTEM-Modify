@@ -8,11 +8,17 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.ComponentModel.DataAnnotations;
 
 namespace Model
 {
     public class ShopModel
     {
+        public int OrderId { get; set; }
+        public string OrderDate { get; set; }
+        public int OrderDetailsId { get; set; }
+      
+
         public int TotalRecord
         {
             get; set;
@@ -69,6 +75,8 @@ namespace Model
         {
             get; set;
         }
+        public List<int> ProductIdList { get; set; }
+
         //public DataSet MasterList
         //{
         //    get; set;
@@ -90,7 +98,11 @@ namespace Model
         {
             get; set;
         }
-        public int CustomerId { get; set; }
+      
+        public int CustomerId
+        {
+            get; set;
+        }
 
         public int TotalCount 
         {

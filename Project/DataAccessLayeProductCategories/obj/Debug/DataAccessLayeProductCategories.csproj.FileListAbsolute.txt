@@ -9,3 +9,10 @@ C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProduct
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProductCategories\obj\Debug\DataAccessLayeProductCategories.csprojResolveAssemblyReference.cache
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProductCategories\obj\Debug\DataAccessLayeProductCategories.dll
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\DataAccessLayeProductCategories\obj\Debug\DataAccessLayeProductCategories.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\bin\Debug\DataAccessLayeProductCategories.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\bin\Debug\DataAccessLayeProductCategories.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\bin\Debug\ProductCategoriesModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\bin\Debug\ProductCategoriesModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\obj\Debug\DataAccessLayeProductCategories.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\obj\Debug\DataAccessLayeProductCategories.dll
+D:\SHOPPING-SYSTEM-Modify\Project\DataAccessLayeProductCategories\obj\Debug\DataAccessLayeProductCategories.pdb

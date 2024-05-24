@@ -3,3 +3,8 @@ C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductCategoriesMode
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductCategoriesModel\obj\Debug\ProductCategoriesModel.dll
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductCategoriesModel\obj\Debug\ProductCategoriesModel.pdb
 C:\Users\HarshitChilvirwar\Desktop\SHOPPING SYSTEM\Project\ProductCategoriesModel\obj\Debug\ProductCategoriesModel.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\ProductCategoriesModel\bin\Debug\ProductCategoriesModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\ProductCategoriesModel\bin\Debug\ProductCategoriesModel.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\ProductCategoriesModel\obj\Debug\ProductCategoriesModel.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\ProductCategoriesModel\obj\Debug\ProductCategoriesModel.dll
+D:\SHOPPING-SYSTEM-Modify\Project\ProductCategoriesModel\obj\Debug\ProductCategoriesModel.pdb
