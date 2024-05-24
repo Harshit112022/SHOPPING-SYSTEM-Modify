@@ -129,6 +129,7 @@
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ShopMasterController.cs" />
+    <Compile Include="Controllers\TaskMasterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,6 +152,8 @@
     <Content Include="Views\Shared\_GetList.cshtml" />
     <Content Include="Views\Shared\_Insert.cshtml" />
     <Content Include="Views\Shared\_Edit.cshtml" />
+    <Content Include="Views\TaskMaster\Index.cshtml" />
+    <Content Include="Views\Shared\_GetProductList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

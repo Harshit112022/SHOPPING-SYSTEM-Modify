@@ -152,6 +152,7 @@ namespace DataAccessLayeProduct
                     {
                         ProductId = Convert.ToInt32(Row["ProductId"]),
                         Name = (Row["Name"]).ToString(),
+                        ProductCategoriesId = Convert.ToInt32(Row["ProductCategoriesId"]),
                         ProductCategory = (Row["ProductCategory"]).ToString(),                    
                         ProductPrice = Convert.ToInt32(Row["ProductPrice"])
 

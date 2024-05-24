@@ -1,0 +1,88 @@
+﻿@model Model.ShopModel
+
+<h2>Products</h2>
+<script type="text/javascript">
+       $(document).on('click', '#SelectProductBtn', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        var ProductId = $('#SelectProductBtn').val();
+        var ProductName = $(this).attr('data-ProductName');
+        var Productcategory = $(this).attr('data-Productcategory');
+        var ProductPrice = $(this).attr('data-produPrice');
+        console.log("Select btn");
+        debugger;
+        var tableBody = $('#tablebodyId');
+        var row = '<tr>' +            
+                     `<td class="text-center " style="vertical-align:middle;" scope="row" value="` + ProductId + `">` + ProductName + `</td>` +
+                    '<td class="text-center" style="vertical-align:middle;" scope="row">' + Productcategory + '</td>' +
+                    '<td class="text-center" style="vertical-align:middle;" scope="row" id="QuentityId" >' + '@Html.TextBoxFor(m => m.Quantity)' + '</td>' +
+                    '<td class="text-center" style="vertical-align:middle;" scope="row"><button type="button" id="removeProductBtn" class="text-center btn btn-danger" style="vertical-align:middle;"> Remove </button></td>' +
+                  '</tr>'
+           tableBody.append(row)
+           
+    })
+
+    $('#tablebodyId').on('click','#removeProductBtn',function(event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        $('#removeProductBtn')[0].parentElement.parentElement.remove();
+        console.log(ProductName);
+        debugger;
+
+        
+    })
+   
+    
+
+
+</script>
+
+
+
+<div>
+
+    <table style="border-color: #807d78;  border-width: 1px; align-content: center;" class="table table-hover table-borde#807d78" >
+        <tr align="center" bgcolor="#ccccff">
+            <td align="center">
+                <b>
+                    Product Name
+
+                </b>
+            </td>
+            <td>
+                <b>
+                    ProductCategory
+                </b>
+            </td>
+            <td>
+                <b>
+                    ProductPrice
+                </b>
+            </td>
+            <td>
+                <b>Action</b>
+            </td>
+        </tr>
+
+        @foreach (var item in Model.ProductModelList)
+            {
+
+            <tr align="center" >
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.ProductCategory
+                </td>
+                <td>
+                    @item.ProductPrice
+                </td>
+                <td>
+                <button type="button" id="SelectProductBtn" value="@item.ProductId" data-ProductName= "@item.Name" data-Productcategory="@item.ProductCategory"  data-produPrice="@item.ProductPrice" class="btn btn-info"> Select</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

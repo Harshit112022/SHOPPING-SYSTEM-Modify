@@ -76,21 +76,23 @@ function display() {
 
 function Delete(id, CustomerName) {
     CustomerName
+    debugger;
 
     Swal.fire({
-        title: "Are you sure?",
-        html: "To Delete <b>" + CustomerName + "</b> record.",
+       // title: "Are you sure? ",
+        html: " Are you sure to Delete <b>" + CustomerName + "</b> record.",
         //  text: "To Delete " + CustomerName + " record.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes",
+        cancelButtonText :"No"
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
                 title: "Deleted!",
-                text: "Your file has been deleted.",
+                text: "Your recode has been deleted.",
                 icon: "success"
             });
             var obj = { id: id };

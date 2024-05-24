@@ -55,6 +55,7 @@
     <Compile Include="CustomerDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopMaster.cs" />
+    <Compile Include="TaskMaster.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CustomerModel\CustomerModel.csproj">

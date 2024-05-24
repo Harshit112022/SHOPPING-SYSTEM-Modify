@@ -17,8 +17,8 @@ namespace Model
         public int OrderId { get; set; }
         public string OrderDate { get; set; }
         public int OrderDetailsId { get; set; }
-      
 
+        public int CountOrderId { get; set; }
         public int TotalRecord
         {
             get; set;

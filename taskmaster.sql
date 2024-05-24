@@ -27,7 +27,7 @@ SELECT * FROM Orders
 SELECT * FROM OrderDetails
 
 CREATE OR ALTER PROC CountOrderId
-@TotalCount INT OUTPUT
+@Count INT OUTPUT
 /*
 ***********************************************************
 1. harshit 23may2024 count the recode of Orders table 
@@ -39,6 +39,7 @@ PRINT @VAR
 AS
 
 BEGIN
-	 set @TotalCount=(SELECT COUNT(*) FROM Orders) ;
+	 SELECT @Count=(SELECT COUNT(*) FROM Orders) ;
 END
+    
       

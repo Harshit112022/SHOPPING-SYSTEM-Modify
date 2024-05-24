@@ -16,7 +16,7 @@ namespace Project
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "ShopMaster", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "TaskMaster", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
