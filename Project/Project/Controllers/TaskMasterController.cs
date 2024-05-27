@@ -24,6 +24,7 @@ namespace Project.Controllers
         {
             shopModel.CountOrderId = taskMaster.GetCountOrder();
             shopModel.CustomerList = customerDAL.GetList(customer);
+         
             return View(shopModel);
         }
 
