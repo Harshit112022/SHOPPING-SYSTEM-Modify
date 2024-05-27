@@ -8,21 +8,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Helper;
 //using System.ComponentModel.DataAnnotations;
 
 namespace Model
 {
-    public class ProductOrderList
-    {
-        public int ProductId
-        {
-            get; set;
-        }
-        public int Quantity
-        {
-            get; set;
-        } 
-    }
+   
     public class ShopModel
     {
 

@@ -3,14 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using Helper;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL
 {
-   public class TaskMaster
+   
+ 
+
+    public class TaskMaster
     {
+        
+        public List<ProductOrderList> ProductOrderList { get; set; }
         public int OrderId { get; set; }
         public string OrderDate { get; set; }
         public int OrderDetailsId { get; set; }
@@ -59,14 +66,22 @@ namespace DAL
         private bool OrdersInsert()
         {
             //this this = new this();
+            var productDetailsJson = JsonConvert.SerializeObject(this.ProductOrderList);
+            
             try
             {
-                DbCommand com = this.db.GetStoredProcCommand("OrdersInsert");               
+                DbCommand com = this.db.GetStoredProcCommand("InsertOrderWithDetails");               
                 if (this.CustomerId > 0)
                     db.AddInParameter(com, "CustomerId", DbType.Int32, this.CustomerId);
 
                 if (!String.IsNullOrEmpty(this.OrderDate))
                          db.AddInParameter(com, "Date", DbType.String, this.OrderDate);
+
+                if(productDetailsJson!= null)
+                {
+                    db.AddInParameter(com, "OrderDetails", DbType.String, productDetailsJson);
+                }
+
                 this.db.ExecuteNonQuery(com);
               
             }
@@ -77,26 +92,7 @@ namespace DAL
             }
             return true; // Return whether ID was returned
         }
-        public bool OrderDetailsInsert()
-        {
-            try
-            {
-                DbCommand com = this.db.GetStoredProcCommand("OrderDetailInsert");
-                //    this.db.AddOutParameter(com, "TagId", DbType.Int32, 1024); 
-                if (this.ProductId > 0)
-                    db.AddInParameter(com, "ProductId", DbType.Int32, this.ProductId);
-                if (this.Quantity > 0)
-                    db.AddInParameter(com, "Quantity", DbType.Int32, this.Quantity);                
-                this.db.ExecuteNonQuery(com);
-
-            }
-            catch (Exception ex)
-            {
-                // To Do: Handle Exception
-                return false;
-            }
-            return true; // Return whet
-        }
+     
 
     }
 }

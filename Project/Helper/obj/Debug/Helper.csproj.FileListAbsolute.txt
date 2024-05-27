@@ -1,0 +1,5 @@
+D:\SHOPPING-SYSTEM-Modify\Project\Helper\bin\Debug\Helper.dll
+D:\SHOPPING-SYSTEM-Modify\Project\Helper\bin\Debug\Helper.pdb
+D:\SHOPPING-SYSTEM-Modify\Project\Helper\obj\Debug\Helper.csprojResolveAssemblyReference.cache
+D:\SHOPPING-SYSTEM-Modify\Project\Helper\obj\Debug\Helper.dll
+D:\SHOPPING-SYSTEM-Modify\Project\Helper\obj\Debug\Helper.pdb

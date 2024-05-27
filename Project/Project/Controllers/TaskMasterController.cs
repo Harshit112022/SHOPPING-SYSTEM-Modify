@@ -42,14 +42,9 @@ namespace Project.Controllers
         {
             taskMaster.CustomerId = shopModel.CustomerId;
             taskMaster.OrderDate = shopModel.OrderDate;
+            taskMaster.ProductOrderList = shopModel.ProductOrderList;          
             taskMaster.Save();
-            foreach (var pair in shopModel.ProductOrderList)
-            {
-                taskMaster.ProductId = pair.ProductId;
-                taskMaster.Quantity = pair.Quantity;
-               bool var = taskMaster.OrderDetailsInsert();
-
-            }
+         
             return Json(true);
         }
 

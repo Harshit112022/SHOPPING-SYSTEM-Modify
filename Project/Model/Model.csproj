@@ -52,6 +52,10 @@
       <Project>{d0f1982b-af19-4483-9ecb-c67059230ef5}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{ee10d4b0-a025-46bd-b9d5-756335dc171f}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProductCategoriesModel\ProductCategoriesModel.csproj">
       <Project>{f0fd0233-cb42-42e1-88e9-86e9d74b30f7}</Project>
       <Name>ProductCategoriesModel</Name>

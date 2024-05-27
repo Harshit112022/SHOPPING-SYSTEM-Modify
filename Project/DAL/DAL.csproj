@@ -42,6 +42,14 @@
     <Reference Include="Microsoft.Practices.ObjectBuilder2">
       <HintPath>..\..\..\..\Downloads\EnterpriseLibraries 1\EnterpriseLibraries\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.3-beta1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,6 +78,10 @@
       <Project>{fd886a04-d288-4d12-a1bf-e57fb57d5a76}</Project>
       <Name>DataAccessLayeProduct</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{ee10d4b0-a025-46bd-b9d5-756335dc171f}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProductCategoriesModel\ProductCategoriesModel.csproj">
       <Project>{f0fd0233-cb42-42e1-88e9-86e9d74b30f7}</Project>
       <Name>ProductCategoriesModel</Name>
@@ -78,6 +90,9 @@
       <Project>{b3103d65-d9aa-490c-b15e-709f3d258e7e}</Project>
       <Name>ProductModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

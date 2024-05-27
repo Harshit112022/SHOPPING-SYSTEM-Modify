@@ -88,22 +88,35 @@ BEGIN
 	INSERT INTO Orders(OrderDate,CustomerId,IsActive,CreatedBy,CreatedOn)
 	VALUES(@Date,@CustomerId,1,'ADMIN',GETDATE())
 END
+CREATE PROC InsertOrderWithDetails 
+ @CustomerId INT,
+ @Date DATETIME,
+@OrderDetails VARCHAR(MAX) 
+AS 
+/*
+select * from Orders
+SELECT * FROM OrderDetails
+EXEC InsertOrderWithDetails 
+    @CustomerId = 1,
+    @Date = '2024-02-01',
+    @OrderDetails = [{"ProductId":1,"Quantity":11},{"ProductId":1,"Quantity":11}]
 
-CREATE PROC OrderDetailInsert
-@ProductId INT ,
-@Quantity INT
-AS
---SELECT * FROM OrderDetails
+*/
 BEGIN
+	INSERT INTO Orders (OrderDate,CustomerId,IsActive,CreatedBy,CreatedOn)
+	values(@Date,@CustomerId,1,'admin',GETDATE())
+
 	DECLARE @OderId int  = IDENT_CURRENT('Orders')
-	INSERT INTO OrderDetails (OrderId,ProductId,Quantity,IsActive,CreatedBy,CreatedOn) values
-	(@OderId,@ProductId,@Quantity,1,'ADMIN',GETDATE());
+	 INSERT INTO OrderDetails (OrderId, ProductId, Quantity,IsActive,CreatedBy,CreatedOn)
+	 SELECT	@OderId,
+			JSON_VALUE(value, '$.ProductId') AS ProductId,
+            JSON_VALUE(value, '$.Quantity') AS Quantity,
+			1,
+			'ADMIN',
+			GETDATE()
+			FROM openJSON(@OrderDetails)
+	 
+	
+
+
 END
-
-select * from Customers
-execute CustomersGetList
-
-
-SELECT * FROM Orders
-delete Orders 
-where OrderId>1
