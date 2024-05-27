@@ -44,6 +44,59 @@ namespace DAL
                 return 0;
             }
         }
+        public bool Save()
+        {
+            if(this.OrderId==0)
+            {
+                 return   OrdersInsert();
+
+            }
+            else
+            {
+                return false;
+            }
+        } 
+        private bool OrdersInsert()
+        {
+            //this this = new this();
+            try
+            {
+                DbCommand com = this.db.GetStoredProcCommand("OrdersInsert");               
+                if (this.CustomerId > 0)
+                    db.AddInParameter(com, "CustomerId", DbType.Int32, this.CustomerId);
+
+                if (!String.IsNullOrEmpty(this.OrderDate))
+                         db.AddInParameter(com, "Date", DbType.String, this.OrderDate);
+                this.db.ExecuteNonQuery(com);
+              
+            }
+            catch (Exception ex)
+            {
+                // To Do: Handle Exception
+                return false;
+            }
+            return true; // Return whether ID was returned
+        }
+        public bool OrderDetailsInsert()
+        {
+            try
+            {
+                DbCommand com = this.db.GetStoredProcCommand("OrderDetailInsert");
+                //    this.db.AddOutParameter(com, "TagId", DbType.Int32, 1024); 
+                if (this.ProductId > 0)
+                    db.AddInParameter(com, "ProductId", DbType.Int32, this.ProductId);
+                if (this.Quantity > 0)
+                    db.AddInParameter(com, "Quantity", DbType.Int32, this.Quantity);                
+                this.db.ExecuteNonQuery(com);
+
+            }
+            catch (Exception ex)
+            {
+                // To Do: Handle Exception
+                return false;
+            }
+            return true; // Return whet
+        }
 
     }
 }

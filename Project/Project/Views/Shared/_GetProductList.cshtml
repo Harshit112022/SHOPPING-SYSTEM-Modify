@@ -2,24 +2,26 @@
 
 <h2>Products</h2>
 <script type="text/javascript">
+
        $(document).on('click', '#SelectProductBtn', function (event) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        var ProductId = $('#SelectProductBtn').val();
+        var ProductId = $(this).attr('data-ProductId');
         var ProductName = $(this).attr('data-ProductName');
         var Productcategory = $(this).attr('data-Productcategory');
         var ProductPrice = $(this).attr('data-produPrice');
         console.log("Select btn");
         debugger;
         var tableBody = $('#tablebodyId');
-        var row = '<tr>' +            
-                     `<td class="text-center " style="vertical-align:middle;" scope="row" value="` + ProductId + `">` + ProductName + `</td>` +
+        var row = '<tr>' +
+                     '<td class="text-center" style="vertical-align:middle;" scope="row">' + ProductId + '</td>' +
+                     `<td class="text-center " style="vertical-align:middle;" scope="row" >` + ProductName + `</td>` +
                     '<td class="text-center" style="vertical-align:middle;" scope="row">' + Productcategory + '</td>' +
-                    '<td class="text-center" style="vertical-align:middle;" scope="row" id="QuentityId" >' + '@Html.TextBoxFor(m => m.Quantity)' + '</td>' +
+                    '<td class="text-center" style="vertical-align:middle;" scope="row" id="QuentityId" >' + '<input type="number" value="1">' + '</td>' +
                     '<td class="text-center" style="vertical-align:middle;" scope="row"><button type="button" id="removeProductBtn" class="text-center btn btn-danger" style="vertical-align:middle;"> Remove </button></td>' +
                   '</tr>'
            tableBody.append(row)
-           
+
     })
 
     $('#tablebodyId').on('click','#removeProductBtn',function(event) {
@@ -29,10 +31,10 @@
         console.log(ProductName);
         debugger;
 
-        
+
     })
-   
-    
+
+
 
 
 </script>
@@ -43,6 +45,12 @@
 
     <table style="border-color: #807d78;  border-width: 1px; align-content: center;" class="table table-hover table-borde#807d78" >
         <tr align="center" bgcolor="#ccccff">
+            <td align="center">
+                <b>
+                    Product Id
+
+                </b>
+            </td>
             <td align="center">
                 <b>
                     Product Name
@@ -69,6 +77,9 @@
 
             <tr align="center" >
                 <td>
+                    @item.ProductId
+                </td>
+                <td>
                     @item.Name
                 </td>
                 <td>
@@ -78,7 +89,7 @@
                     @item.ProductPrice
                 </td>
                 <td>
-                <button type="button" id="SelectProductBtn" value="@item.ProductId" data-ProductName= "@item.Name" data-Productcategory="@item.ProductCategory"  data-produPrice="@item.ProductPrice" class="btn btn-info"> Select</button>
+                <button type="button" id="SelectProductBtn" data-ProductId="@item.ProductId" data-ProductName= "@item.Name" data-Productcategory="@item.ProductCategory"  data-produPrice="@item.ProductPrice" class="btn btn-info"> Select</button>
                 </td>
             </tr>
         }

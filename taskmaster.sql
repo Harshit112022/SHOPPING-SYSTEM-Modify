@@ -21,6 +21,36 @@ EXEC sp_RENAME 'OrderDetails.OrderID' , 'OrderId', 'COLUMN'
 INSERT INTO OrderDetails (OrderID,ProductId,Quantity)values
 (1,1,12);
 ;
+SELECT * FROM Orders
+SELECT * FROM OrderDetails
+
+ALTER TABLE Orders
+ADD 	
+	IsActive BIT DEFAULT  1,
+	CreatedBy VARCHAR (MAX),
+	CreatedOn DATETIME,
+	LastModifiedBy VARCHAR (MAX),
+	LastModifiedOn DATETIME;
+
+UPDATE Orders
+SET CreatedBy ='admin',
+SET CreatedOn = '2024-05-24'
+where OrderId=1
+
+ALTER TABLE OrderDetails
+ADD 	
+	IsActive BIT DEFAULT  1,
+	CreatedBy VARCHAR (MAX),
+	CreatedOn DATETIME,
+	LastModifiedBy VARCHAR (MAX),
+	LastModifiedOn DATETIME;
+
+UPDATE OrderDetails
+SET IsActive =1
+--SET CreatedBy ='admin'
+--SET CreatedOn = '2024-05-24'
+where OrderId=1
+
 
 
 SELECT * FROM Orders
@@ -39,7 +69,41 @@ PRINT @VAR
 AS
 
 BEGIN
-	 SELECT @Count=(SELECT COUNT(*) FROM Orders) ;
+	 SELECT @Count=IDENT_CURRENT('Orders') ;
 END
     
-      
+
+DELETE Orders
+WHERE OrderId=2
+SELECT IDENT_CURRENT('Orders') AS LastIdentityValue;
+
+
+CREATE PROC OrdersInsert ,'2024-05-05'
+@CustomerId int,
+@Date DATE
+
+AS
+--SELECT * FROM Orders
+BEGIN
+	INSERT INTO Orders(OrderDate,CustomerId,IsActive,CreatedBy,CreatedOn)
+	VALUES(@Date,@CustomerId,1,'ADMIN',GETDATE())
+END
+
+CREATE PROC OrderDetailInsert
+@ProductId INT ,
+@Quantity INT
+AS
+--SELECT * FROM OrderDetails
+BEGIN
+	DECLARE @OderId int  = IDENT_CURRENT('Orders')
+	INSERT INTO OrderDetails (OrderId,ProductId,Quantity,IsActive,CreatedBy,CreatedOn) values
+	(@OderId,@ProductId,@Quantity,1,'ADMIN',GETDATE());
+END
+
+select * from Customers
+execute CustomersGetList
+
+
+SELECT * FROM Orders
+delete Orders 
+where OrderId>1

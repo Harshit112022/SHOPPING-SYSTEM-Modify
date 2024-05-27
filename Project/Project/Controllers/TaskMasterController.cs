@@ -36,6 +36,21 @@ namespace Project.Controllers
             return PartialView("_GetProductList", shopModel);
 
         }
+        [HttpPost]
+        public ActionResult InsertOdrder(ShopModel shopModel)
+        {
+            taskMaster.CustomerId = shopModel.CustomerId;
+            taskMaster.OrderDate = shopModel.OrderDate;
+            taskMaster.Save();
+            foreach (var pair in shopModel.ProductOrderList)
+            {
+                taskMaster.ProductId = pair.ProductId;
+                taskMaster.Quantity = pair.Quantity;
+               bool var = taskMaster.OrderDetailsInsert();
+
+            }
+            return Json(true);
+        }
 
 
 

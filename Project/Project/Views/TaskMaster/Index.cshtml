@@ -21,7 +21,44 @@
     })
 
     })
-    
+    $(document).on('click', '#savebtn', function (event) {
+        event.preventDefault();
+        var ProductObject = [];
+        $('#tableId').find('tbody > tr ').each(function (Index) {
+            ProductObject[Index] = {
+                ProductId: $(this).find('td').eq(0).text(),
+                Quantity: $(this).find('td > input').val()
+
+            }
+        });
+
+        var CustomerId = $('#CustomerId').val();
+        var OrderDate = $('#OrderDate').val();
+
+        var obj = {
+        CustomerId ,
+        OrderDate,
+        ProductOrderList: ProductObject
+        }
+        console.log(obj);
+        debugger;
+        $.ajax({
+            url: "/TaskMaster/InsertOdrder",
+            method: "POST",
+            data: obj,
+            success: function () {
+                alert("data inserted successfully");
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+       
+    });
+
+
+
+
     function GetProductList()
     {
         debugger;  
@@ -30,7 +67,7 @@
             method: "GET",
             success: function (response) {
                $('.modal').modal();
-            $('.modal-body').html(response);
+               $('.modal-body').html(response);
                 debugger;
             },
             error: function (xhr, status, error) {
@@ -45,30 +82,37 @@
     Master Task
 </div>
 <hr />
-<div class="form-group" style="width: 77px; margin-left: 5rem;">
-    <label class="font-weight-bold">Order Id :</label>
-    <br />
-    @Html.TextBoxFor(m => m.CountOrderId, new { @class = "form-control", @readonly = "readonly" })
-</div>
-@using (Html.BeginForm())
-{
-    <div style=" margin-left: 5rem">
-        <label style="font-size: 15px; font-weight: bold; ">Select Customer Name</label>
-        @Html.DropDownListFor(m => m.CustomerId, new SelectList(Model.CustomerList, "CustomerId", "Name"), "--Select Customer--", new { @class = "form-control " ,style = "width: 18rem;"})
+<div style="display:flex;">
+    <div class="form-group" style="width: 77px; margin-left: 5rem;">
+        <label class="font-weight-bold">Order Id :</label>
+        <br />
+     @Html.TextBoxFor(m => m.CountOrderId, new { @class = "form-control", @readonly = "readonly" })
     </div>
+   <div style=" margin-left: 5rem">
+            <label style="font-size: 15px; font-weight: bold; ">Select Customer Name</label>
+            @Html.DropDownListFor(m => m.CustomerId, new SelectList(Model.CustomerList, "CustomerId", "Name"), "--Select Customer--", new { @class = "form-control ", style = "width: 18rem;" })
+        </div>
+        <div style=" margin-left: 5rem">
+            <label style="font-size: 15px; font-weight: bold; ">Select Oder Date</label><br />
+            @Html.TextBoxFor(m => m.OrderDate, new { @class = "form-control", @type = "date", style = "width: 18rem;" })
+        </div>
     <div style=" margin-left: 5rem">
-        <label style="font-size: 15px; font-weight: bold; ">Select Oder Date</label><br />
-        @Html.TextBoxFor(m => m.OrderDate, new { @class = "form-control", @type = "date" , style = "width: 18rem;" })
-    </div>
-
-}
-    <div style=" margin-left: 5rem">
+        <label style="font-size: 15px; font-weight: bold; ">  &nbsp;   </label><br />
         <input type="button" value="Add Product" id="AddProduct" class="btn btn-primary">
     </div>
+</div>
 
-<table style="border-color: #807d78;  border-width: 1px;  width: 50%; margin: 0 auto; align-content: center;" class="table table-hover table-borderless" >
+
+
+
+
+
+
+
+<table style="border-color: #807d78;  border-width: 1px;  width: 70rem; margin-left:5rem; align-content: center;" id="tableId" class="table table-hover table-borderless" >
     <thead>
         <tr   align="center" bgcolor="#ccccff" style="color: #000000;">
+            <td scope="col" style="border: 1px solid #807d78;">Product Id</td> 
             <td scope="col" style="border: 1px solid #807d78;">Product Name</td>        
             <td scope="col" style="border: 1px solid #807d78;">Product category</td>     
             <td scope="col" style="border: 1px solid #807d78;">Quantity</td>
@@ -77,21 +121,23 @@
     </thead>
     <tbody id="tablebodyId"></tbody>
 </table>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="display: flex; align-items: center;">
-                @*  <h2 style="margin-right: auto;">Insert</h2>*@
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true" style="background-color: transparent; border: none; cursor: pointer; transition: all 0.3s ease;">
-                    <span aria-hidden="true" style="font-size: 27px;">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @*/create form*@
+<div style=" margin-left: 5rem">
+    <input type="button" value="Save" id="savebtn" class="btn btn-danger" />
+</div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="display: flex; align-items: center;">
+                    @*  <h2 style="margin-right: auto;">Insert</h2>*@
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true" style="background-color: transparent; border: none; cursor: pointer; transition: all 0.3s ease;">
+                        <span aria-hidden="true" style="font-size: 27px;">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*/create form*@
+                </div>
             </div>
         </div>
     </div>
-</div>
 

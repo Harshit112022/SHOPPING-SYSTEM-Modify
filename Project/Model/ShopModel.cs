@@ -12,12 +12,24 @@ using System.Threading.Tasks;
 
 namespace Model
 {
+    public class ProductOrderList
+    {
+        public int ProductId
+        {
+            get; set;
+        }
+        public int Quantity
+        {
+            get; set;
+        } 
+    }
     public class ShopModel
     {
+
+        public List<ProductOrderList> ProductOrderList { get; set; }
         public int OrderId { get; set; }
         public string OrderDate { get; set; }
         public int OrderDetailsId { get; set; }
-
         public int CountOrderId { get; set; }
         public int TotalRecord
         {
@@ -51,10 +63,7 @@ namespace Model
         {
             get; set;
         }
-        public int Quantity
-        {
-            get; set;
-        }
+        public int Quantity{ get; set;  } 
         public int ProductPrice
         {
             get; set;
