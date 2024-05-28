@@ -88,10 +88,10 @@ BEGIN
 	INSERT INTO Orders(OrderDate,CustomerId,IsActive,CreatedBy,CreatedOn)
 	VALUES(@Date,@CustomerId,1,'ADMIN',GETDATE())
 END
-CREATE PROC InsertOrderWithDetails 
+ALTER OR CREATE PROC InsertOrderWithDetails 
  @CustomerId INT,
  @Date DATETIME,
-@OrderDetails VARCHAR(MAX) 
+@OrderDetails XML
 AS 
 /*
 select * from Orders
@@ -100,23 +100,36 @@ EXEC InsertOrderWithDetails
     @CustomerId = 1,
     @Date = '2024-02-01',
     @OrderDetails = [{"ProductId":1,"Quantity":11},{"ProductId":1,"Quantity":11}]
+DECLARE @XMLDATA XML;
+SET @XMLDATA ='<ProductOrderList>
+  <ProductOrder>
+    <ProductId>1</ProductId>
+    <Quantity>5</Quantity>
+  </ProductOrder>
+  <ProductOrder>
+    <ProductId>2</ProductId>
+    <Quantity>3</Quantity>
+  </ProductOrder>
+</ProductOrderList>'
+(SELECT 1,
+	T.C.value('(ProductId)[1]','INT'),
+	T.C.value('(Quantity)[1]','INT')
+	FROM
+	@XMLDATA.nodes('/ProductOrderList/ProductOrder') AS T(C)) 
 
 */
+
 BEGIN
 	INSERT INTO Orders (OrderDate,CustomerId,IsActive,CreatedBy,CreatedOn)
 	values(@Date,@CustomerId,1,'admin',GETDATE())
-
 	DECLARE @OderId int  = IDENT_CURRENT('Orders')
 	 INSERT INTO OrderDetails (OrderId, ProductId, Quantity,IsActive,CreatedBy,CreatedOn)
-	 SELECT	@OderId,
-			JSON_VALUE(value, '$.ProductId') AS ProductId,
-            JSON_VALUE(value, '$.Quantity') AS Quantity,
-			1,
-			'ADMIN',
-			GETDATE()
-			FROM openJSON(@OrderDetails)
-	 
-	
-
-
+	(SELECT @OderId,
+	T.C.value('(ProductId)[1]','INT'),
+	T.C.value('(Quantity)[1]','INT'),
+	1,
+	'admin',
+	GETDATE()
+	FROM
+	@OrderDetails.nodes('/ProductOrderList/ProductOrder') AS T(C)) 
 END

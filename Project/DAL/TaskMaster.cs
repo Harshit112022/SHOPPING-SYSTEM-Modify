@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DAL
 {
@@ -19,16 +20,8 @@ namespace DAL
         
         public List<ProductOrderList> ProductOrderList { get; set; }
         public int OrderId { get; set; }
-        public string OrderDate { get; set; }
-        public int OrderDetailsId { get; set; }
-        public string CustomerName{  get; set;}
-        public int CustomerId{    get; set;  }
-        public int ProductId{get; set; }
-        public string ProductName {get; set;  }
-        public int ProductPrice {get; set; }
-        public string ProductCategory{ get; set;}
-        public int ProductCategoriesId { get; set;}
-        public int Quantity{get; set;}
+        public string OrderDate { get; set; }       
+        public int CustomerId{    get; set;  }          
         public int CountOrderId { get; set;}
         private Database db;
         public TaskMaster()
@@ -62,25 +55,65 @@ namespace DAL
             {
                 return false;
             }
-        } 
+        }
+
+        public string ConvertToXml(List<ProductOrderList> productOrderList)
+        {
+            if (productOrderList == null || productOrderList.Count == 0)
+                return null;
+
+            StringBuilder xmlBuilder = new StringBuilder();
+           
+            xmlBuilder.AppendLine("<?xml version=\"1.0\"?>");
+            xmlBuilder.AppendLine("<ProductOrderList>");
+
+            foreach (var productOrder in productOrderList)
+            {
+                xmlBuilder.AppendLine("<ProductOrder>");
+                xmlBuilder.AppendLine($"    <ProductId>{productOrder.ProductId}</ProductId>");
+                xmlBuilder.AppendLine($"    <Quantity>{productOrder.Quantity}</Quantity>");
+                xmlBuilder.AppendLine("  </ProductOrder>");
+            }
+
+            xmlBuilder.AppendLine("</ProductOrderList>");
+
+            return xmlBuilder.ToString();
+        }
         private bool OrdersInsert()
         {
-            //this this = new this();
-            var productDetailsJson = JsonConvert.SerializeObject(this.ProductOrderList);
-            
+
+            //XElement Xbooks = new XElement("ProductOrderList");
+            //foreach (var Product in this.ProductOrderList)
+            //{
+            //    XElement bookElement = new XElement("ProductOrder", new XElement("ProductId", Product.ProductId), new XElement("Quantity", Product.Quantity));
+            //    Xbooks.Add(bookElement);
+            //}
+            //string XmlBooksString = Xbooks.ToString().Replace("\r\n", "");
+
+            string xmlBuilder = ConvertToXml(this.ProductOrderList);
+
             try
             {
                 DbCommand com = this.db.GetStoredProcCommand("InsertOrderWithDetails");               
                 if (this.CustomerId > 0)
                     db.AddInParameter(com, "CustomerId", DbType.Int32, this.CustomerId);
+                else
+                    db.AddInParameter(com, "CustomerId", DbType.Int32, DBNull.Value);
+
 
                 if (!String.IsNullOrEmpty(this.OrderDate))
                          db.AddInParameter(com, "Date", DbType.String, this.OrderDate);
+                else
+                    db.AddInParameter(com, "Date", DbType.String, DBNull.Value);
 
-                if(productDetailsJson!= null)
+
+                if (xmlBuilder != null)
                 {
-                    db.AddInParameter(com, "OrderDetails", DbType.String, productDetailsJson);
+                    db.AddInParameter(com, "OrderDetails", DbType.Xml, xmlBuilder);
                 }
+                else
+                    db.AddInParameter(com, "OrderDetails", DbType.Xml, DBNull.Value);
+
 
                 this.db.ExecuteNonQuery(com);
               

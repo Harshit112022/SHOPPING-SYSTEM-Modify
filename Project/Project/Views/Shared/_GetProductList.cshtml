@@ -27,7 +27,8 @@
     $('#tablebodyId').on('click','#removeProductBtn',function(event) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        $('#removeProductBtn')[0].parentElement.parentElement.remove();
+        //$('#removeProductBtn')[0].parentElement.parentElement.remove();
+        $(this).closest('tr').remove();
         console.log(ProductName);
         debugger;
     })

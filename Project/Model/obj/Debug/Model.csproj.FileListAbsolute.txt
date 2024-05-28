@@ -32,5 +32,3 @@ D:\SHOPPING-SYSTEM-Modify\Project\Model\obj\Debug\Model.dll
 D:\SHOPPING-SYSTEM-Modify\Project\Model\obj\Debug\Model.pdb
 D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\Helper.dll
 D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\Helper.pdb
-D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\Newtonsoft.Json.dll
-D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\Newtonsoft.Json.xml
