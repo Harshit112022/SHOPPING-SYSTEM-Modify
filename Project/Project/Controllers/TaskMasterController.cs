@@ -7,25 +7,27 @@ using DAL;
 using Model;
 using CustomerModel;
 using DataAccessLayeProduct;
+using System.Text;
 
 namespace Project.Controllers
 {
     public class TaskMasterController : Controller
     {
             TaskMaster taskMaster = new TaskMaster();
-            ShopModel shopModel = new ShopModel();
+            TaskMasterModel taskMasterModel = new TaskMasterModel();
             Customer customer = new Customer();
             CustomerDAL customerDAL = new CustomerDAL();
             DataLaye DataLayeProduct = new DataLaye();
+            StringBuilder xmlString = new StringBuilder();
 
 
         // GET: TaskMaster
         public ActionResult Index()
         {
-            shopModel.CountOrderId = taskMaster.GetCountOrder();
-            shopModel.CustomerList = customerDAL.GetList(customer);
+            taskMasterModel.CountOrderId = taskMaster.GetCountOrder();
+            taskMasterModel.CustomerList = customerDAL.GetList(customer);
          
-            return View(shopModel);
+            return View(taskMasterModel);
         }
 
 
@@ -33,19 +35,51 @@ namespace Project.Controllers
 
         public ActionResult GetProductList()
         {
-            shopModel.ProductModelList = DataLayeProduct.GetList();
-            return PartialView("_GetProductList", shopModel);
+            taskMasterModel.ProductModelList = DataLayeProduct.GetList();
+            return PartialView("_GetProductList", taskMasterModel);
 
         }
         [HttpPost]
-        public ActionResult InsertOdrder(ShopModel shopModel)
+        public ActionResult InsertOdrder(TaskMasterModel taskMasterModel)
         {
-            taskMaster.CustomerId = shopModel.CustomerId;
-            taskMaster.OrderDate = shopModel.OrderDate;
-            taskMaster.ProductOrderList = shopModel.ProductOrderList;          
-            taskMaster.Save();
-         
-            return Json(true);
+            try
+            {
+                    taskMaster.CustomerId = taskMasterModel.CustomerId;
+                    taskMaster.OrderDate = taskMasterModel.OrderDate;  
+                    if (ConvertToXml(taskMasterModel.ProductOrderList))
+                    {  
+                         taskMaster.xmlString = xmlString.ToString();
+                         taskMaster.Save();
+                         return Json(true);
+                    }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            return Json(false );
+
+        }
+
+        public bool ConvertToXml(List<ProductOrderList> productOrderList)
+        {
+            if (productOrderList == null || productOrderList.Count == 0)
+                return false;
+
+            
+           
+            xmlString.AppendLine("<?xml version=\"1.0\"?>");
+            xmlString.AppendLine("<ProductOrderList>");
+            foreach (var productOrder in productOrderList)
+            {
+                 xmlString.AppendLine("<ProductOrder>");
+                 xmlString.AppendLine($"    <ProductId>{productOrder.ProductId}</ProductId>");
+                 xmlString.AppendLine($"    <Quantity>{productOrder.Quantity}</Quantity>");
+                 xmlString.AppendLine("  </ProductOrder>");
+            }
+
+                xmlString.AppendLine("</ProductOrderList>");    
+                return true;
         }
 
 

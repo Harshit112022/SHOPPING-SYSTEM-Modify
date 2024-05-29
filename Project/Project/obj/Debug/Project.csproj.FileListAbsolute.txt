@@ -137,5 +137,3 @@ D:\SHOPPING-SYSTEM-Modify\Project\Project\bin\System.Web.Mvc.xml
 D:\SHOPPING-SYSTEM-Modify\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache
 D:\SHOPPING-SYSTEM-Modify\Project\Project\obj\Debug\Project.dll
 D:\SHOPPING-SYSTEM-Modify\Project\Project\obj\Debug\Project.pdb
-D:\SHOPPING-SYSTEM-Modify\Project\Project\bin\Helper.dll
-D:\SHOPPING-SYSTEM-Modify\Project\Project\bin\Helper.pdb

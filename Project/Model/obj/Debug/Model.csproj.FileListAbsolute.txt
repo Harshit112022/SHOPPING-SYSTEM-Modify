@@ -30,5 +30,3 @@ D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\ProductModel.pdb
 D:\SHOPPING-SYSTEM-Modify\Project\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 D:\SHOPPING-SYSTEM-Modify\Project\Model\obj\Debug\Model.dll
 D:\SHOPPING-SYSTEM-Modify\Project\Model\obj\Debug\Model.pdb
-D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\Helper.dll
-D:\SHOPPING-SYSTEM-Modify\Project\Model\bin\Debug\Helper.pdb

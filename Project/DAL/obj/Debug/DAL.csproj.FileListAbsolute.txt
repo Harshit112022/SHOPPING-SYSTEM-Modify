@@ -32,8 +32,6 @@ D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\ProductModel.pdb
 D:\SHOPPING-SYSTEM-Modify\Project\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 D:\SHOPPING-SYSTEM-Modify\Project\DAL\obj\Debug\DAL.dll
 D:\SHOPPING-SYSTEM-Modify\Project\DAL\obj\Debug\DAL.pdb
-D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\Helper.dll
-D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\Helper.pdb
 D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\Newtonsoft.Json.Bson.dll
 D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\Newtonsoft.Json.dll
 D:\SHOPPING-SYSTEM-Modify\Project\DAL\bin\Debug\Newtonsoft.Json.xml

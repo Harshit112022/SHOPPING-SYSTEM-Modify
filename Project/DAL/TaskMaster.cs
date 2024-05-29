@@ -3,26 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using Helper;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
+using CustomerModel;
 namespace DAL
 {
-   
- 
+
+
 
     public class TaskMaster
     {
         
-        public List<ProductOrderList> ProductOrderList { get; set; }
         public int OrderId { get; set; }
         public string OrderDate { get; set; }       
         public int CustomerId{    get; set;  }          
         public int CountOrderId { get; set;}
+        public string xmlString { get; set; }
         private Database db;
         public TaskMaster()
         {
@@ -30,7 +29,7 @@ namespace DAL
         }
         public int GetCountOrder()
         {
-            DataSet ds = null;
+          //  DataSet ds = null;
             try
             {
                 DbCommand com = db.GetStoredProcCommand("CountOrderId");
@@ -57,28 +56,7 @@ namespace DAL
             }
         }
 
-        public string ConvertToXml(List<ProductOrderList> productOrderList)
-        {
-            if (productOrderList == null || productOrderList.Count == 0)
-                return null;
-
-            StringBuilder xmlBuilder = new StringBuilder();
-           
-            xmlBuilder.AppendLine("<?xml version=\"1.0\"?>");
-            xmlBuilder.AppendLine("<ProductOrderList>");
-
-            foreach (var productOrder in productOrderList)
-            {
-                xmlBuilder.AppendLine("<ProductOrder>");
-                xmlBuilder.AppendLine($"    <ProductId>{productOrder.ProductId}</ProductId>");
-                xmlBuilder.AppendLine($"    <Quantity>{productOrder.Quantity}</Quantity>");
-                xmlBuilder.AppendLine("  </ProductOrder>");
-            }
-
-            xmlBuilder.AppendLine("</ProductOrderList>");
-
-            return xmlBuilder.ToString();
-        }
+    
         private bool OrdersInsert()
         {
 
@@ -90,7 +68,7 @@ namespace DAL
             //}
             //string XmlBooksString = Xbooks.ToString().Replace("\r\n", "");
 
-            string xmlBuilder = ConvertToXml(this.ProductOrderList);
+          
 
             try
             {
@@ -107,9 +85,9 @@ namespace DAL
                     db.AddInParameter(com, "Date", DbType.String, DBNull.Value);
 
 
-                if (xmlBuilder != null)
+                if (xmlString != null)
                 {
-                    db.AddInParameter(com, "OrderDetails", DbType.Xml, xmlBuilder);
+                    db.AddInParameter(com, "OrderDetails", DbType.Xml,this.xmlString);
                 }
                 else
                     db.AddInParameter(com, "OrderDetails", DbType.Xml, DBNull.Value);

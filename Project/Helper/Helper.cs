@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Helper
 {
-    public class ProductOrderList
-    {
-        public int ProductId
-        {
-            get; set;
-        }
-        public int Quantity
-        {
-            get; set;
-        }
-    }
+    //public class ProductOrderList
+    //{
+    //    public int ProductId
+    //    {
+    //        get; set;
+    //    }
+    //    public int Quantity
+    //    {
+    //        get; set;
+    //    }
+    //}
 }

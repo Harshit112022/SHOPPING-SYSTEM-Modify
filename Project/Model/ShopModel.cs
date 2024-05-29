@@ -8,7 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Helper;
+
 //using System.ComponentModel.DataAnnotations;
 
 namespace Model
@@ -17,11 +17,7 @@ namespace Model
     public class ShopModel
     {
 
-        public List<ProductOrderList> ProductOrderList { get; set; }
-        public int OrderId { get; set; }
-        public string OrderDate { get; set; }
-        public int OrderDetailsId { get; set; }
-        public int CountOrderId { get; set; }
+      
         public int TotalRecord
         {
             get; set;

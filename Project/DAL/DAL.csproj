@@ -78,10 +78,6 @@
       <Project>{fd886a04-d288-4d12-a1bf-e57fb57d5a76}</Project>
       <Name>DataAccessLayeProduct</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Helper\Helper.csproj">
-      <Project>{ee10d4b0-a025-46bd-b9d5-756335dc171f}</Project>
-      <Name>Helper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ProductCategoriesModel\ProductCategoriesModel.csproj">
       <Project>{f0fd0233-cb42-42e1-88e9-86e9d74b30f7}</Project>
       <Name>ProductCategoriesModel</Name>
