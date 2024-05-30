@@ -80,7 +80,7 @@ namespace DAL
 
 
                 if (!String.IsNullOrEmpty(this.OrderDate))
-                         db.AddInParameter(com, "Date", DbType.String, this.OrderDate);
+                         db.AddInParameter(com, "Date", DbType.DateTime, this.OrderDate);
                 else
                     db.AddInParameter(com, "Date", DbType.String, DBNull.Value);
 
