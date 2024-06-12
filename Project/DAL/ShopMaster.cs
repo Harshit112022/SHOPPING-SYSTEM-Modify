@@ -1,5 +1,5 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Data;
-//using Model;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -88,7 +88,7 @@ namespace DAL
             this.db = DatabaseFactory.CreateDatabase();
         }
         #endregion
-        public List<ShopMaster> GetList()
+        public List<ShopModel> GetList()
         {
             DataSet ds = null;
             try
@@ -99,13 +99,6 @@ namespace DAL
                 else
                     db.AddInParameter(com, "@id", DbType.Int32, DBNull.Value);
                 db.AddInParameter(com, "@Varname", DbType.String, this.CustomerName);
-
-
-                //if (this.ProductId > 0)
-                //    db.AddInParameter(com, "@VarProductId", DbType.Int32, this.ProductId);
-                //else
-                //    db.AddInParameter(com, "@VarProductId", DbType.Int32, DBNull.Value);
-
                 if (this.ProductIdList != null)
                 {
                     string ProductIdString = string.Join(",", this.ProductIdList);
@@ -137,10 +130,10 @@ namespace DAL
                 ds = db.ExecuteDataSet(com);
                 this.TotalCount = (int)db.GetParameterValue(com, "@TotalCount");
                 this.TotalRecord = (int)db.GetParameterValue(com,"@TotalRecord");
-                List<ShopMaster> list = new List<ShopMaster>();
+                List<ShopModel> list = new List<ShopModel>();
                 foreach (DataRow Row in ds.Tables[0].Rows)
                 {
-                    list.Add(new ShopMaster
+                    list.Add(new ShopModel
                     {
                         SaleOrdersDetailsId = Convert.ToInt32(Row["SaleOrdersDetailsId"]),
                         CustomerName = Convert.ToString(Row["CustomerName"]),

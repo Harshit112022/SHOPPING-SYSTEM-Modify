@@ -2,18 +2,94 @@
 
 
 <script type="text/javascript">
+    var PageNumber;
 
-     
+    $(document).ready(function () {
+        PageNumber = document.getElementById('xyz').getAttribute('data-page-number');;
+        GetList();
+        debugger;
 
+    })
+    function GetList() {
+        var obj = { PageNumber: PageNumber }
+        debugger;
+        $.ajax({
+            url: "/TaskMaster/GetProductList",
+            method: "GET",
+            data:obj,
+            success: function (data) {
+                debugger;
+                console.log(data.ProductModelList);
+               debugger;
+                             
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+   
+    function RenderList(list) {
+        console.log(list);
+        debugger;
+        var tableBody = $('#tblProductList');
+        tableBody.empty();
+        if (list.length != 0) {
+            $.each(list, function (index, item) {
+                var row = '<tr align="center" style="border: 1px solid #807d78;">' +
+                    '<td scope="col" style="border: 1px solid #807d78;">' + item.ProductId + '</td>' +
+                    '<td scope="col" style="border: 1px solid #807d78;">' + item.Name + '</td>' +
+                    '<td scope="col" style="border: 1px solid #807d78;">' + item.ProductPrice + '</td>' +
+                    '<td scope="col" style="border: 1px solid #807d78;">' + item.ProductCategory + '</td>' +
+                    '<td scope="col" style="border: 1px solid #807d78;">' +
+                    '<button type="button" id="SelectProductBtn" class="btn btn-info"> Select</button>' +
+                    '</td>' +
+                    '</tr>';  // Properly close the <tr> tag
+                tableBody.append(row);
+            });
+        } else {
+            var row = '<tr><td colspan="8" class="text-center text-danger font-weight-bold h3" style="vertical-align:middle;" scope="row">No Records Found</td></tr>';
+            tableBody.append(row);
+        }
+    }
+
+    function renderPagination(TotalCount, PageNumber) {
+        $(".pagination").empty()
+        if (PageNumber > 1) {
+            $(".pagination").append(`<li class="page-item "  value=${PageNumber - 1} id="pagenumber"><a class="page-link" href="#" tabindex="-1">Previous</a></li>`);
+        }
+        for (var i = 1; i <= TotalCount; i++) {
+            if (PageNumber == i) {
+                $(".pagination").append(` <li class="page-item active" value=${i} id="pagenumber" ><a class="page-link" href="#">${i}</a></li>`)
+            } else {
+                $(".pagination").append(` <li class="page-item "   value=${i} id="pagenumber"><a class="page-link" href="#">${i}</a></li>`)
+            }
+        }
+        if (TotalCount != PageNumber) {
+            $(".pagination").append(`<li class="page-item"   value=${PageNumber + 1} id="pagenumber"><a class="page-link" href="#">Next</a></li>`)
+
+        }
+    }
+    $(document).on('click', '#pagenumber', function () {
+        console.log("Function get clicked..")
+        PageNumber = $(this).val();
+        debugger;
+        PageSize = $('#PageSize').val();
+        //sessionStorage.setItem('PageNumberkey', PageNumber);
+        GetList();
+
+    })
 
 </script>
 
-
+<p id="xyz" data-page-number="@Model.PageNumber"></p>
 
 <div>
 
     <table style="border-color: #807d78;  border-width: 1px; align-content: center;" class="table table-hover table-borde#807d78" >
-        <tr align="center" bgcolor="#ccccff">
+        <thead align="center" bgcolor="#dc3545">
+            <tr>
+
             <td align="center">
                 <b>
                     Product Id
@@ -39,32 +115,16 @@
             <td>
                 <b>Action</b>
             </td>
-        </tr>
-
-        @foreach (var item in Model.ProductModelList)
-        {
-           
-
-            <tr align="center" >
-                <td>
-                    @item.ProductId
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.ProductCategory
-                </td>
-                <td>
-                    @item.ProductPrice
-                </td>
-                <td>
-                @*<button type="button" id="SelectProductBtn" data-ProductId="@item.ProductId" data-ProductName= "@item.Name" data-Productcategory="@item.ProductCategory"  data-produPrice="@item.ProductPrice" class="btn btn-info"> Select</button>*@
-                    <button type="button" id="SelectProductBtn" class="btn btn-info"> Select</button>
-
-                 </td>
             </tr>
-        }
-
+        </thead>
+        <tbody id="tblProductList">
+        </tbody>       
     </table>
+
+    
+    <nav aria-label="...">
+        <ul class="pagination pagination-sm justify-content-center"></ul>
+    </nav>
+    
+
 </div>

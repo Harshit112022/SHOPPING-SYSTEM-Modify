@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using Model;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using CustomerModel;
+using System.Diagnostics;
+
 namespace DAL
 {
 
@@ -102,6 +105,38 @@ namespace DAL
                 return false;
             }
             return true; // Return whether ID was returned
+        }
+
+          public List<TaskMasterModel> GetOrderDetails()
+        {
+            DataSet ds = null;
+            try
+            {
+                DbCommand com = db.GetStoredProcCommand("OrdesGetDetails");
+                if (this.CustomerId > 0)
+                    db.AddInParameter(com, "CustomerId", DbType.Int32, this.CustomerId);
+                else
+                    db.AddInParameter(com, "CustomerId", DbType.Int32, DBNull.Value);
+                ds = db.ExecuteDataSet(com);           
+                List<TaskMasterModel> list = new List<TaskMasterModel>();
+                foreach (DataRow Row in ds.Tables[0].Rows)
+                {
+                    list.Add(new TaskMasterModel
+                    {    
+                        ProductName = Convert.ToString(Row["ProductName"]),
+                        ProductId = Convert.ToInt32(Row["ProductId"]),
+                        ProductCategory = Convert.ToString(Row["ProductCategory"]),
+                        Quantity = Convert.ToInt32(Row["Quantity"])                
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                //To Do: Handle Exception
+                Debug.WriteLine(ex.StackTrace);
+                return null;
+            }
         }
      
 

@@ -9,7 +9,7 @@ namespace ProductModel
 {
     public class Product
     {
-
+        
         public int ProductId
         {
             get; set;
@@ -35,8 +35,8 @@ namespace ProductModel
         {
             get; set;
         }
-  
-        public List<ProductCategories> ProductCategoriesList { get; set;}
-     
+
+        //public List<ProductCategories> ProductCategoriesList { get; set;}
+
     }
 }

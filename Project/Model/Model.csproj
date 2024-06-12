@@ -49,10 +49,6 @@
       <Project>{2f92520a-a43f-46a9-a7cf-ca0184ef06a0}</Project>
       <Name>CustomerModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{d0f1982b-af19-4483-9ecb-c67059230ef5}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ProductCategoriesModel\ProductCategoriesModel.csproj">
       <Project>{f0fd0233-cb42-42e1-88e9-86e9d74b30f7}</Project>
       <Name>ProductCategoriesModel</Name>

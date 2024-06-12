@@ -13,8 +13,8 @@ namespace Project.Controllers
 {
     public class TaskMasterController : Controller
     {
-            TaskMaster taskMaster = new TaskMaster();
             TaskMasterModel taskMasterModel = new TaskMasterModel();
+            TaskMaster taskMaster = new TaskMaster();
             Customer customer = new Customer();
             CustomerDAL customerDAL = new CustomerDAL();
             DataLaye DataLayeProduct = new DataLaye();
@@ -22,35 +22,70 @@ namespace Project.Controllers
 
 
         // GET: TaskMaster
-        public ActionResult Index()
+        public ActionResult Index(TaskMasterModel taskMasterModel)
         {
-            taskMasterModel.CountOrderId = taskMaster.GetCountOrder();
-            taskMasterModel.CustomerList = customerDAL.GetList(customer);
-         
-            return View(taskMasterModel);
+            try
+            {
+
+                taskMasterModel.CountOrderId = taskMaster.GetCountOrder();
+                taskMasterModel.CustomerList = customerDAL.GetList(customer);
+                    if(taskMasterModel.CustomerId>0)
+                    {
+                        taskMaster.CustomerId = taskMasterModel.CustomerId;
+                        taskMasterModel.ListOrderDetails = taskMaster.GetOrderDetails();
+                        
+                    }
+                return View(taskMasterModel);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = "Error occeer"});
+            }
+        }
+       
+        public ActionResult GetProductListView()
+        {
+            try
+            {                            
+              return PartialView("_GetProductList", taskMasterModel);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success=false, message = "Error occeer" });
+            }
+
+        }
+      
+        public ActionResult GetProductList(TaskMasterModel taskMasterModel)
+        {    
+            try
+            {
+                DataLayeProduct.PageNumber = taskMasterModel.PageNumber;
+                DataLayeProduct.PageSize = taskMasterModel.PageSize;
+                taskMasterModel.ProductModelList = DataLayeProduct.GetList();
+                taskMasterModel.TotalCount = DataLayeProduct.TotalCount;
+                taskMasterModel.TotalRows = DataLayeProduct.TotalRows;
+                return Json(taskMasterModel, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error occeer" });
+            }
+
         }
 
-
-
-
-        public ActionResult GetProductList()
-        {
-            taskMasterModel.ProductModelList = DataLayeProduct.GetList();
-            return PartialView("_GetProductList", taskMasterModel);
-
-        }
         [HttpPost]
         public ActionResult InsertOdrder(TaskMasterModel taskMasterModel)
         {
             try
             {
-                    taskMaster.CustomerId = taskMasterModel.CustomerId;
-                    taskMaster.OrderDate = taskMasterModel.OrderDate;  
                     if (ConvertToXml(taskMasterModel.ProductOrderList))
                     {  
-                         taskMaster.xmlString = xmlString.ToString();
-                         taskMaster.Save();
-                         return Json(true);
+                         taskMaster.CustomerId = taskMasterModel.CustomerId;
+                         taskMaster.OrderDate = taskMasterModel.OrderDate;  
+                         taskMaster.xmlString = xmlString.ToString();                       
+                         return Json(taskMaster.Save());
                     }
             }
             catch(Exception ex)
@@ -81,7 +116,7 @@ namespace Project.Controllers
                 xmlString.AppendLine("</ProductOrderList>");    
                 return true;
         }
-
+     
 
 
 

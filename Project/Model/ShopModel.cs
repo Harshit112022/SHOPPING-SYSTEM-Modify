@@ -1,5 +1,5 @@
 ﻿using CustomerModel;
-using DAL;
+
 using ProductCategoriesModel;
 using ProductModel;
 using System;
@@ -67,7 +67,7 @@ namespace Model
         {
             get; set;
         }
-        public List<ShopMaster> MasterList
+        public List<ShopModel> MasterList
         {
             get; set;
         }

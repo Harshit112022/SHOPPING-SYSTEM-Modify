@@ -50,7 +50,7 @@ namespace Project.Controllers
         public ActionResult ProductsInsert()
         {
             DataLayeCategories dataLayeCategories = new DataLayeCategories();
-            product.ProductCategoriesList = dataLayeCategories.GetList();
+           // product.ProductCategoriesList = dataLayeCategories.GetList();
            
             return View(product);
         }

@@ -11,11 +11,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-    $(document).on('click', '#AddProduct', function () {
-        debugger;
-        GetProductList();
-
-    })
+   
     $('#tablebodyId').on('click', '#removeProductBtn', function (event) {
         event.preventDefault();
         $(this).closest('tr').remove();       
@@ -49,11 +45,12 @@
                 if(response)
                 {
                     alert("Data is successfully inserted");
+                    window.location.href = "/TaskMaster/Index";
                     debugger;
                 }
                 else
                 {
-               //     alert("Data is NOT inserted");
+                   alert("Data is NOT inserted");
                     debugger;
                 }
             },
@@ -64,21 +61,7 @@
         });
        
     }); 
-    function GetProductList()
-    {
-        debugger;  
-        $.ajax({
-            url: "/TaskMaster/GetProductList",
-            method: "GET",
-            success: function (response) {
-                $('#modalBodyContent').html(response);               
-                $('#staticBackdrop').modal('show');
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    }  
+    
     $(document).on('click', '#SelectProductBtn', function (event) {
         var row = $(this).closest('tr');
         var ProductId = row.find('td').eq(0).text();
@@ -96,8 +79,8 @@
         }
         else
         {
-            var newRow = '<tr>' +
-                             '<td class="text-center" style="vertical-align:middle;" scope="col">' + ProductId + '</td>' +
+            var newRow = '<tr class="bg-white">' +
+                             '<td class="text-center" style="vertical-align:middle; " scope="col">' + ProductId + '</td>' +
                              '<td class="text-center" style="vertical-align:middle;" scope="col">' + ProductName + '</td>' +
                              '<td class="text-center" style="vertical-align:middle;" scope="col">' + Productcategory + '</td>' +
                              '<td class="text-center" style="vertical-align:middle;" scope="col"><input type="number" value="1" style="  width: 5rem; text-align: center;"></td>' +
@@ -106,17 +89,32 @@
             tableBody.append(newRow);
         }
     });
-
+    $(document).on('click', '#AddProduct', function () {
+        debugger
+        $.ajax({
+            url: "/TaskMaster/GetProductListView",
+            method: "GET",
+            success: function (response) {
+                $('#modalBodyContent').html(response);
+                $('#staticBackdrop').modal('show');
+                debugger;
+            },
+            error: function ( status, error) {
+                   debugger
+                console.log(error);
+             
+            }
+        });
+    })
+    
+    
+   
 </script>
-<body class="p-5">
+
+<body class="p-5" >
     <div style=" font-size: 30px; font-weight: bold; margin-left:10rem">
         ShopMaster
-    </div>
-
-
-
-
- 
+    </div> 
     <div class="d-flex justify-content-center mt-4">      
 
             <div class="form-group mx-4" style="width: 77px;">
@@ -127,9 +125,6 @@
             <div class="form-group mx-4">
                 <label style="font-size: 15px; font-weight: bold; ">Select Customer Name</label>
                 @Html.DropDownListFor(m => m.CustomerId, new SelectList(Model.CustomerList, "CustomerId", "Name"), " Select Customer ", new { @class = "form-control form-select", style = "width: 18rem;"})
-                <div class="invalid-feedback">
-                    Please select a valid state.
-                </div>
             </div>
 
             <div class="form-group mx-4">
@@ -138,29 +133,22 @@
 
             </div>
 
-            <div class="form-group mx-4">
+            <div class="form-group mx-5">
                 <label style="font-size: 15px; font-weight: bold; ">  &nbsp;   </label><br />
-                <input type="button" value="Add Product" id="AddProduct" class="btn btn-primary">
+                <input type="button" value="Add Product" id="AddProduct" class="btn btn-outline-primary">
             </div>
 
-            <div class="form-group mx-4">
-                <label style="font-size: 15px; font-weight: bold; ">  &nbsp;   </label><br />
+            <div class="form-group">
+                <label style="font-size: 15px; font-weight: bold; ">  &nbsp;   </label><br />   
               
-                <button class="btn btn-primary"  id="savebtn" type="submit">Save</button>
+                <button class="btn btn-outline-success"  id="savebtn" type="submit">Save</button>
             </div>
 
      </div>
-
-
-
-
-
-
-
     <div  style="padding-left: 10rem; padding-right: 10rem;">
-    <table  style="border-color: #807d78;  border-width: 1px; align-content: center;" class="table table-hover table-borde#807d78 mt-4" id="tableId">
+    <table  style="border-color: #807d78;  border-width: 1px; align-content: center;" class="table table-hover table-borde#807d78 mt-4 table" id="tableId">
         <thead>
-            <tr align="center" bgcolor="#ccccff" >
+            <tr align="center" bgcolor="#dc3545" >
                 <td class="text-center" style="vertical-align:middle; font-weight: bold;" scope="col">Product Id</td>
                 <td class="text-center" style="vertical-align:middle;font-weight: bold;" scope="col">Product Name</td>
                 <td class="text-center" style="vertical-align:middle;font-weight: bold;" scope="col">Product category</td>
@@ -168,21 +156,50 @@
                 <td class="text-center" style="vertical-align:middle;font-weight: bold;" scope="col">Action</td>
             </tr>
         </thead>
-        <tbody id="tablebodyId"></tbody>
+        <tbody id="tablebodyId">
+            @if(Model.CustomerId !=0)
+            {
+
+            foreach (var item in Model.ListOrderDetails)
+            {
+
+
+                <tr align="center">
+                    <td>
+                        @item.ProductId
+                    </td>
+                    <td>
+                        @item.ProductName
+                    </td>
+                    <td>
+                        @item.ProductCategory
+                    </td>    
+                    <td>
+                        @item.Quantity
+                    </td>                            
+                    <td>
+                   
+                        <button type="button" id="" class="btn btn-info"> Edit</button>
+                    </td>
+                </tr>
+            }
+            }
+
+
+
+        </tbody>
     </table>
     </div>
-  
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content" style="width: 42rem;">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Prducts List</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modalBodyContent">        
-            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
         </div>

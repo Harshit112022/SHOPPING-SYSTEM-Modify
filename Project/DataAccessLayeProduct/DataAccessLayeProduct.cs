@@ -14,7 +14,24 @@ namespace DataAccessLayeProduct
     public class DataLaye
     {
         private Database db;
-        Product product = new Product();
+        public int PageNumber
+        {
+            get; set;
+        }
+        public int PageSize
+        {
+            get; set;
+        }
+        public int TotalRows
+        {
+            get; set;
+        }
+        public int TotalCount
+        {
+            get; set;
+        }
+
+
         List<Product> list = new List<Product>();
 
         public DataLaye()
@@ -56,43 +73,43 @@ namespace DataAccessLayeProduct
         {
             try
             {
-                DbCommand com = this.db.GetStoredProcCommand("ProductsInsert");
-                db.AddOutParameter(com, "ProductId", DbType.Int32, 1024);
-                if (!String.IsNullOrEmpty(product.Name))
-                {
-                    db.AddInParameter(com, "ProductName", DbType.String, product.Name);
-                }
-                else
-                {
-                    db.AddInParameter(com, "ProductName", DbType.String, DBNull.Value);
-                }
-                 //   db.AddInParameter(com, "IsActive", DbType.Boolean, product.Name);
-                if (product.ProductCategoriesId != 0)
-                {
-                    db.AddInParameter(com, "ProductCategoriesId", DbType.Int32, product.ProductCategoriesId);
-                }
-                else
-                {
-                    db.AddInParameter(com, "ProductCategoriesId", DbType.Int32, DBNull.Value);
-                }
-                if (!String.IsNullOrEmpty(product.CreatedBy))
-                {
-                    db.AddInParameter(com, "CreatedBy", DbType.String, product.CreatedBy);
-                }
-                else
-                {
-                    db.AddInParameter(com, "CreatedBy", DbType.String, DBNull.Value);
-                }
-                if (product.ProductPrice !=0 )
-                {
-                    db.AddInParameter(com, "price", DbType.Int32, product.ProductPrice);
-                }
-                else
-                {
-                    db.AddInParameter(com, "price", DbType.Int32, DBNull.Value);
-                }
-                db.ExecuteNonQuery(com);
-                product.ProductId = Convert.ToInt32(this.db.GetParameterValue(com, "ProductId"));      // Read in the output parameter value
+                //DbCommand com = this.db.GetStoredProcCommand("ProductsInsert");
+                //db.AddOutParameter(com, "ProductId", DbType.Int32, 1024);
+                //if (!String.IsNullOrEmpty(product.Name))
+                //{
+                //    db.AddInParameter(com, "ProductName", DbType.String, product.Name);
+                //}
+                //else
+                //{
+                //    db.AddInParameter(com, "ProductName", DbType.String, DBNull.Value);
+                //}
+                // //   db.AddInParameter(com, "IsActive", DbType.Boolean, product.Name);
+                //if (product.ProductCategoriesId != 0)
+                //{
+                //    db.AddInParameter(com, "ProductCategoriesId", DbType.Int32, product.ProductCategoriesId);
+                //}
+                //else
+                //{
+                //    db.AddInParameter(com, "ProductCategoriesId", DbType.Int32, DBNull.Value);
+                //}
+                //if (!String.IsNullOrEmpty(product.CreatedBy))
+                //{
+                //    db.AddInParameter(com, "CreatedBy", DbType.String, product.CreatedBy);
+                //}
+                //else
+                //{
+                //    db.AddInParameter(com, "CreatedBy", DbType.String, DBNull.Value);
+                //}
+                //if (product.ProductPrice !=0 )
+                //{
+                //    db.AddInParameter(com, "price", DbType.Int32, product.ProductPrice);
+                //}
+                //else
+                //{
+                //    db.AddInParameter(com, "price", DbType.Int32, DBNull.Value);
+                //}
+                //db.ExecuteNonQuery(com);
+                //product.ProductId = Convert.ToInt32(this.db.GetParameterValue(com, "ProductId"));      // Read in the output parameter value
             }
             catch (Exception ex)
             {
@@ -114,20 +131,20 @@ namespace DataAccessLayeProduct
             {
                 if (varName != null || productCategory != null)
                 {
-                    DbCommand cmd = this.db.GetStoredProcCommand("[ProductsGetList]");
-                    this.db.AddInParameter(cmd, "@varName", DbType.String, varName);
-                    this.db.AddInParameter(cmd, "@varproductCategory", DbType.String, productCategory);
-                    DataSet ds = this.db.ExecuteDataSet(cmd);
-                    foreach (DataRow Row in ds.Tables[0].Rows)
-                    {
-                        list.Add(new Product
-                        {
-                            Name = (Row["Name"]).ToString(),
-                            ProductCategory = (Row["ProductCategory"]).ToString(),
-                            ProductPrice = Convert.ToInt32(Row["ProductPrice"])                    
-                        }
-                     );
-                    }
+                    //DbCommand cmd = this.db.GetStoredProcCommand("[ProductsGetList]");
+                    //this.db.AddInParameter(cmd, "@varName", DbType.String, varName);
+                    //this.db.AddInParameter(cmd, "@varproductCategory", DbType.String, productCategory);
+                    //DataSet ds = this.db.ExecuteDataSet(cmd);
+                    //foreach (DataRow Row in ds.Tables[0].Rows)
+                    //{
+                    //    list.Add(new Product
+                    //    {
+                    //        Name = (Row["Name"]).ToString(),
+                    //        ProductCategory = (Row["ProductCategory"]).ToString(),
+                    //        ProductPrice = Convert.ToInt32(Row["ProductPrice"])                    
+                    //    }
+                    // );
+                    //}
                 }
                 return list;
             }
@@ -145,16 +162,38 @@ namespace DataAccessLayeProduct
             try
             {
                 DbCommand com = db.GetStoredProcCommand("ProductsGetList");
+
+                
+
+               if (this.PageNumber > 0)
+                    db.AddInParameter(com, "@PageNumber", DbType.Int32, this.PageNumber);
+                else
+                    db.AddInParameter(com, "@PageNumber", DbType.Int32, DBNull.Value);
+                if (this.PageSize > 0)
+                    db.AddInParameter(com, "@PageSize", DbType.Int32, this.PageSize);
+                else
+                    db.AddInParameter(com, "@PageSize", DbType.Int32, DBNull.Value);
+
+
+                db.AddOutParameter(com, "@TotalCount", DbType.Int32, 1024);
+                db.AddOutParameter(com, "@TotalRow", DbType.Int32, 1024);
+
                 ds = db.ExecuteDataSet(com);
+
+                this.TotalCount = (int)db.GetParameterValue(com, "@TotalCount");
+                this.TotalRows = (int)db.GetParameterValue(com, "@TotalRow");
+
                 foreach (DataRow Row in ds.Tables[0].Rows)
                 {
                     list.Add(new Product
                     {
                         ProductId = Convert.ToInt32(Row["ProductId"]),
-                        Name = (Row["Name"]).ToString(),
-                        ProductCategoriesId = Convert.ToInt32(Row["ProductCategoriesId"]),
+                        Name = (Row["Name"]).ToString(),                    
                         ProductCategory = (Row["ProductCategory"]).ToString(),                    
-                        ProductPrice = Convert.ToInt32(Row["ProductPrice"])
+                        ProductPrice = Convert.ToInt32(Row["ProductPrice"]),
+                   
+                     
+
 
                     });
                 }
@@ -164,9 +203,9 @@ namespace DataAccessLayeProduct
             {
                 //To Do: Handle Exception
                 Debug.WriteLine(ex.StackTrace);
+                return list;
             }
 
-            return list;
         }
 
     }
